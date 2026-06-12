@@ -114,6 +114,12 @@ Use final mode before submission:
 .\tools\check_final_submission.ps1
 ```
 
+To wait while the Proteus GUI project and demo video are being produced:
+
+```powershell
+.\tools\watch_final_submission.ps1
+```
+
 ## Build Design DOCX
 
 ```powershell

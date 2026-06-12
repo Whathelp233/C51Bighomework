@@ -31,3 +31,9 @@ After recording, run:
 ```powershell
 .\tools\check_final_submission.ps1
 ```
+
+Alternatively, start this watcher before saving the project and video:
+
+```powershell
+.\tools\watch_final_submission.ps1
+```

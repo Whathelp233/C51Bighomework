@@ -61,6 +61,7 @@ $requiredFiles = @(
     'output\video\demo_storyboard.md',
     'tools\start_final_proteus_session.ps1',
     'tools\check_final_submission.ps1',
+    'tools\watch_final_submission.ps1',
     $docProteusInvestigation
 )
 
@@ -171,6 +172,12 @@ Assert-TextContains -RelativePath 'tools\check_final_submission.ps1' -Needles @(
     'topic3_car.pdsprj',
     'demo.mp4',
     'ffprobe'
+)
+Assert-TextContains -RelativePath 'tools\watch_final_submission.ps1' -Needles @(
+    'topic3_car.pdsprj',
+    'demo.mp4',
+    'check_final_submission.ps1',
+    'TimeoutMinutes'
 )
 Assert-TextContains -RelativePath $docProteusInvestigation -Needles @(
     'ROOT.DSN',

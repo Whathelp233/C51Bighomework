@@ -142,3 +142,9 @@ Before final submission, run:
 ```powershell
 .\tools\check_final_submission.ps1
 ```
+
+If Proteus is open and you want the terminal to wait until both final files exist, run:
+
+```powershell
+.\tools\watch_final_submission.ps1
+```

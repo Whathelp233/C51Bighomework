@@ -42,6 +42,7 @@ $checks = @(
     @{ Name = 'Proteus plan check script'; Path = 'tools\check_topic3_proteus_plan.ps1'; Required = $true },
     @{ Name = 'Final Proteus session launcher'; Path = 'tools\start_final_proteus_session.ps1'; Required = $true },
     @{ Name = 'Final submission check script'; Path = 'tools\check_final_submission.ps1'; Required = $true },
+    @{ Name = 'Final submission watcher'; Path = 'tools\watch_final_submission.ps1'; Required = $true },
     @{ Name = 'Demo video storyboard'; Path = 'output\video\demo_storyboard.md'; Required = $true },
     @{ Name = 'Final Proteus project'; Path = 'proteus\topic3_car.pdsprj'; Required = [bool]$Final },
     @{ Name = '20-second demo video'; Path = 'output\video\demo.mp4'; Required = [bool]$Final }
