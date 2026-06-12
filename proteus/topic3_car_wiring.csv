@@ -1,0 +1,125 @@
+block,ref,part,proteus_part,pin,net,connects_to,setting,required
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.0,LED0_DRV,R1 to D1 cathode,active low LED0,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.1,LED1_DRV,R2 to D2 cathode,active low LED1,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.2,LED2_DRV,R3 to D3 cathode,active low LED2,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.3,LED3_DRV,R4 to D4 cathode,active low LED3,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.4,LED4_DRV,R5 to D5 cathode,active low LED4,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.5,LED5_DRV,R6 to D6 cathode,active low LED5,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.6,LED6_DRV,R7 to D7 cathode,active low LED6,yes
+mcu,U1,8051 MCU,AT89C52 or AT89C51,P1.7,LED7_DRV,R8 to D8 cathode,active low LED7,yes
+led,D1,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D1,LED,LED-RED,K,LED0_DRV,R1 to U1 P1.0,LED cathode,yes
+led,D2,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D2,LED,LED-RED,K,LED1_DRV,R2 to U1 P1.1,LED cathode,yes
+led,D3,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D3,LED,LED-RED,K,LED2_DRV,R3 to U1 P1.2,LED cathode,yes
+led,D4,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D4,LED,LED-RED,K,LED3_DRV,R4 to U1 P1.3,LED cathode,yes
+led,D5,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D5,LED,LED-RED,K,LED4_DRV,R5 to U1 P1.4,LED cathode,yes
+led,D6,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D6,LED,LED-RED,K,LED5_DRV,R6 to U1 P1.5,LED cathode,yes
+led,D7,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D7,LED,LED-RED,K,LED6_DRV,R7 to U1 P1.6,LED cathode,yes
+led,D8,LED,LED-RED,A,VCC_5V,5 V rail,LED anode,yes
+led,D8,LED,LED-RED,K,LED7_DRV,R8 to U1 P1.7,LED cathode,yes
+resistor,R1,LED resistor,RES,1,LED0_DRV,U1 P1.0,220 ohm to 1 kohm,yes
+resistor,R2,LED resistor,RES,1,LED1_DRV,U1 P1.1,220 ohm to 1 kohm,yes
+resistor,R3,LED resistor,RES,1,LED2_DRV,U1 P1.2,220 ohm to 1 kohm,yes
+resistor,R4,LED resistor,RES,1,LED3_DRV,U1 P1.3,220 ohm to 1 kohm,yes
+resistor,R5,LED resistor,RES,1,LED4_DRV,U1 P1.4,220 ohm to 1 kohm,yes
+resistor,R6,LED resistor,RES,1,LED5_DRV,U1 P1.5,220 ohm to 1 kohm,yes
+resistor,R7,LED resistor,RES,1,LED6_DRV,U1 P1.6,220 ohm to 1 kohm,yes
+resistor,R8,LED resistor,RES,1,LED7_DRV,U1 P1.7,220 ohm to 1 kohm,yes
+key,U1,8051 MCU,AT89C52 or AT89C51,P3.0,KEY_UP_N,SW1 and R9,active low input,yes
+key,U1,8051 MCU,AT89C52 or AT89C51,P3.1,KEY_DOWN_N,SW2 and R10,active low input,yes
+key,U1,8051 MCU,AT89C52 or AT89C51,P3.2,KEY_START_N,SW3 and R11,active low input,yes
+key,U1,8051 MCU,AT89C52 or AT89C51,P3.3,KEY_MODE_N,SW4 and R12,active low input,yes
+key,SW1,button,BUTTON,1,KEY_UP_N,U1 P3.0,press to ground,yes
+key,SW1,button,BUTTON,2,GND,ground rail,press to ground,yes
+key,SW2,button,BUTTON,1,KEY_DOWN_N,U1 P3.1,press to ground,yes
+key,SW2,button,BUTTON,2,GND,ground rail,press to ground,yes
+key,SW3,button,BUTTON,1,KEY_START_N,U1 P3.2,press to ground,yes
+key,SW3,button,BUTTON,2,GND,ground rail,press to ground,yes
+key,SW4,button,BUTTON,1,KEY_MODE_N,U1 P3.3,press to ground,yes
+key,SW4,button,BUTTON,2,GND,ground rail,press to ground,yes
+pullup,R9,key pullup,RES,1,KEY_UP_N,U1 P3.0,4.7 kohm to 10 kohm,yes
+pullup,R9,key pullup,RES,2,VCC_5V,5 V rail,4.7 kohm to 10 kohm,yes
+pullup,R10,key pullup,RES,1,KEY_DOWN_N,U1 P3.1,4.7 kohm to 10 kohm,yes
+pullup,R10,key pullup,RES,2,VCC_5V,5 V rail,4.7 kohm to 10 kohm,yes
+pullup,R11,key pullup,RES,1,KEY_START_N,U1 P3.2,4.7 kohm to 10 kohm,yes
+pullup,R11,key pullup,RES,2,VCC_5V,5 V rail,4.7 kohm to 10 kohm,yes
+pullup,R12,key pullup,RES,1,KEY_MODE_N,U1 P3.3,4.7 kohm to 10 kohm,yes
+pullup,R12,key pullup,RES,2,VCC_5V,5 V rail,4.7 kohm to 10 kohm,yes
+ultrasonic,U1,8051 MCU,AT89C52 or AT89C51,P3.4,US_TRIG,U4 Trig or logic probe,10 us trigger output,yes
+ultrasonic,U1,8051 MCU,AT89C52 or AT89C51,P3.5,US_ECHO,U4 Echo or V1 pulse output,Timer0 echo input,yes
+ultrasonic,U4,ultrasonic module,HC-SR04,Trig,US_TRIG,U1 P3.4,trigger input,yes
+ultrasonic,U4,ultrasonic module,HC-SR04,Echo,US_ECHO,U1 P3.5,echo output,yes
+ultrasonic,U4,ultrasonic module,HC-SR04,VCC,VCC_5V,5 V rail,module supply,yes
+ultrasonic,U4,ultrasonic module,HC-SR04,GND,GND,ground rail,module ground,yes
+echo_sub,V1,pulse source,PULSE or CLOCK,OUT,US_ECHO,U1 P3.5,use if HC-SR04 missing,optional
+echo_sub,V1,pulse source,PULSE or CLOCK,GND,GND,ground rail,common ground,optional
+lcd,U1,8051 MCU,AT89C52 or AT89C51,P0.0,LCD_RS,U2 RS,LCD register select,yes
+lcd,U1,8051 MCU,AT89C52 or AT89C51,P0.1,LCD_EN,U2 E,LCD enable,yes
+lcd,U1,8051 MCU,AT89C52 or AT89C51,P0.2,LCD_D4,U2 D4,4 bit LCD data,yes
+lcd,U1,8051 MCU,AT89C52 or AT89C51,P0.3,LCD_D5,U2 D5,4 bit LCD data,yes
+lcd,U1,8051 MCU,AT89C52 or AT89C51,P0.4,LCD_D6,U2 D6,4 bit LCD data,yes
+lcd,U1,8051 MCU,AT89C52 or AT89C51,P0.5,LCD_D7,U2 D7,4 bit LCD data,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,RS,LCD_RS,U1 P0.0,command or data select,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,RW,GND,ground rail,write only mode,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,E,LCD_EN,U1 P0.1,enable input,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,D4,LCD_D4,U1 P0.2,4 bit data,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,D5,LCD_D5,U1 P0.3,4 bit data,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,D6,LCD_D6,U1 P0.4,4 bit data,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,D7,LCD_D7,U1 P0.5,4 bit data,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,VSS,GND,ground rail,LCD ground,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,VDD,VCC_5V,5 V rail,LCD supply,yes
+lcd,U2,LCD1602,LM016L or LCD16X2,VEE,LCD_CONTRAST,VR1 wiper or divider,contrast,yes
+lcd_pullup,RP1,P0 pullups,RESPACK or RESPACK-8,1,LCD_RS,VCC_5V,add if P0 is open drain,optional
+lcd_pullup,RP1,P0 pullups,RESPACK or RESPACK-8,2,LCD_EN,VCC_5V,add if P0 is open drain,optional
+lcd_pullup,RP1,P0 pullups,RESPACK or RESPACK-8,3,LCD_D4,VCC_5V,add if P0 is open drain,optional
+lcd_pullup,RP1,P0 pullups,RESPACK or RESPACK-8,4,LCD_D5,VCC_5V,add if P0 is open drain,optional
+lcd_pullup,RP1,P0 pullups,RESPACK or RESPACK-8,5,LCD_D6,VCC_5V,add if P0 is open drain,optional
+lcd_pullup,RP1,P0 pullups,RESPACK or RESPACK-8,6,LCD_D7,VCC_5V,add if P0 is open drain,optional
+motor,U1,8051 MCU,AT89C52 or AT89C51,P2.0,L_IN1,U3 1A,left motor direction,yes
+motor,U1,8051 MCU,AT89C52 or AT89C51,P2.1,L_IN2,U3 2A,left motor direction,yes
+motor,U1,8051 MCU,AT89C52 or AT89C51,P2.2,R_IN1,U3 3A,right motor direction,yes
+motor,U1,8051 MCU,AT89C52 or AT89C51,P2.3,R_IN2,U3 4A,right motor direction,yes
+motor,U1,8051 MCU,AT89C52 or AT89C51,P2.4,L_EN,U3 1_2EN,left enable,yes
+motor,U1,8051 MCU,AT89C52 or AT89C51,P2.5,R_EN,U3 3_4EN,right enable,yes
+motor,U3,motor driver,L293D,1A,L_IN1,U1 P2.0,left motor input,yes
+motor,U3,motor driver,L293D,2A,L_IN2,U1 P2.1,left motor input,yes
+motor,U3,motor driver,L293D,3A,R_IN1,U1 P2.2,right motor input,yes
+motor,U3,motor driver,L293D,4A,R_IN2,U1 P2.3,right motor input,yes
+motor,U3,motor driver,L293D,1_2EN,L_EN,U1 P2.4,left output enable,yes
+motor,U3,motor driver,L293D,3_4EN,R_EN,U1 P2.5,right output enable,yes
+motor,U3,motor driver,L293D,1Y,L_MOTOR_A,M1 terminal A,left motor output,yes
+motor,U3,motor driver,L293D,2Y,L_MOTOR_B,M1 terminal B,left motor output,yes
+motor,U3,motor driver,L293D,3Y,R_MOTOR_A,M2 terminal A,right motor output,yes
+motor,U3,motor driver,L293D,4Y,R_MOTOR_B,M2 terminal B,right motor output,yes
+motor,U3,motor driver,L293D,VCC1,VCC_5V,5 V logic rail,logic supply,yes
+motor,U3,motor driver,L293D,VCC2,MOTOR_VCC,5 V to 9 V motor rail,motor supply,yes
+motor,U3,motor driver,L293D,GND,GND,ground rail,common ground,yes
+motor,M1,dc motor,MOTOR-DC,1,L_MOTOR_A,U3 1Y,left motor terminal,yes
+motor,M1,dc motor,MOTOR-DC,2,L_MOTOR_B,U3 2Y,left motor terminal,yes
+motor,M2,dc motor,MOTOR-DC,1,R_MOTOR_A,U3 3Y,right motor terminal,yes
+motor,M2,dc motor,MOTOR-DC,2,R_MOTOR_B,U3 4Y,right motor terminal,yes
+clock,U1,8051 MCU,AT89C52 or AT89C51,XTAL1,XTAL1,Y1 and C1,12 MHz crystal,yes
+clock,U1,8051 MCU,AT89C52 or AT89C51,XTAL2,XTAL2,Y1 and C2,12 MHz crystal,yes
+clock,Y1,crystal,CRYSTAL,1,XTAL1,U1 XTAL1,12 MHz,yes
+clock,Y1,crystal,CRYSTAL,2,XTAL2,U1 XTAL2,12 MHz,yes
+clock,C1,crystal capacitor,CAP,1,XTAL1,U1 XTAL1,about 30 pF,yes
+clock,C1,crystal capacitor,CAP,2,GND,ground rail,about 30 pF,yes
+clock,C2,crystal capacitor,CAP,1,XTAL2,U1 XTAL2,about 30 pF,yes
+clock,C2,crystal capacitor,CAP,2,GND,ground rail,about 30 pF,yes
+reset,U1,8051 MCU,AT89C52 or AT89C51,RST,RESET,R13 and C3,reset input,yes
+reset,R13,reset resistor,RES,1,RESET,U1 RST,about 10 kohm,yes
+reset,R13,reset resistor,RES,2,GND,ground rail,pull down for 8051 reset,yes
+reset,C3,reset capacitor,CAP-ELEC,1,VCC_5V,5 V rail,about 10 uF,yes
+reset,C3,reset capacitor,CAP-ELEC,2,RESET,U1 RST,power on reset pulse,yes
+power,U1,8051 MCU,AT89C52 or AT89C51,VCC,VCC_5V,5 V rail,logic supply,yes
+power,U1,8051 MCU,AT89C52 or AT89C51,GND,GND,ground rail,logic ground,yes
+power,U1,8051 MCU,AT89C52 or AT89C51,EA,VCC_5V,5 V rail,use internal program memory,yes
+power,VS1,logic supply,VCC,VCC,VCC_5V,5 V source,logic rail,yes
+power,VS2,motor supply,POWER,MOTOR_VCC,5 V to 9 V source,motor rail,yes
+power,GND,ground,GROUND,GND,GND,common ground,all grounds common,yes

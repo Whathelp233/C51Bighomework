@@ -1,0 +1,16 @@
+tmp/
+build/
+__pycache__/
+*.pyc
+output/docx/rendered/
+proteus/*_starter.pdsprj
+*.uvproj.bak
+*.uvopt.bak
+*.bak
+*.hex
+*.lst
+*.obj
+*.plg
+*.lnp
+*.m51
+*.omf

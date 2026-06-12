@@ -1,0 +1,1036 @@
+                             Product         Sample &          Technical            Tools &           Support &
+                             Folder          Buy               Documents            Software          Community
+
+
+
+                                                                                                                        L293, L293D
+                                                                                     SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+                                           L293x Quadruple Half-H Drivers
+1 Features                                                            3 Description
+•
+1   Wide Supply-Voltage Range: 4.5 V to 36 V                          The L293 and L293D devices are quadruple high-
+                                                                      current half-H drivers. The L293 is designed to
+•   Separate Input-Logic Supply                                       provide bidirectional drive currents of up to 1 A at
+•   Internal ESD Protection                                           voltages from 4.5 V to 36 V. The L293D is designed
+•   High-Noise-Immunity Inputs                                        to provide bidirectional drive currents of up to 600-mA
+•   Output Current 1 A Per Channel (600 mA for                        at voltages from 4.5 V to 36 V. Both devices are
+                                                                      designed to drive inductive loads such as relays,
+    L293D)
+                                                                      solenoids, DC and bipolar stepping motors, as well as
+•   Peak Output Current 2 A Per Channel (1.2 A for                    other high-current/high-voltage loads in positive-
+    L293D)                                                            supply applications.
+•   Output Clamp Diodes for Inductive Transient                       Each output is a complete totem-pole drive circuit,
+    Suppression (L293D)                                               with a Darlington transistor sink and a pseudo-
+                                                                      Darlington source. Drivers are enabled in pairs, with
+2 Applications                                                        drivers 1 and 2 enabled by 1,2EN and drivers 3 and 4
+•   Stepper Motor Drivers                                             enabled by 3,4EN.
+•   DC Motor Drivers                                                  The L293 and L293D are characterized for operation
+•   Latching Relay Drivers                                            from 0°C to 70°C.
+
+                                                                                               Device Information(1)
+                                                                           PART NUMBER            PACKAGE         BODY SIZE (NOM)
+                                                                       L293NE                   PDIP (16)     19.80 mm × 6.35 mm
+                                                                       L293DNE                  PDIP (16)     19.80 mm × 6.35 mm
+                                                                       (1) For all available packages, see the orderable addendum at
+                                                                           the end of the data sheet.
+
+                                                            Logic Diagram
+                                                        2                       3
+                                                  1A                                  1Y
+                                                        1
+                                               1,2EN
+                                                        7                       6
+                                                  2A                                  2Y
+
+
+                                                  3A    10                    11
+                                                                                      3Y
+                                                        9
+                                               3,4EN
+                                                        15                    14
+                                                  4A                                  4Y
+
+
+
+
+1
+
+
+
+
+      An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+      intellectual property matters and other important disclaimers. PRODUCTION DATA.
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                                                                      www.ti.com
+
+
+                                                                           Table of Contents
+    1   Features .................................................................. 1               8.3 Feature Description................................................... 7
+    2   Applications ........................................................... 1                  8.4 Device Functional Modes.......................................... 8
+    3   Description ............................................................. 1           9    Application and Implementation .......................... 9
+    4   Revision History..................................................... 2                     9.1 Application Information.............................................. 9
+                                                                                                    9.2 Typical Application ................................................... 9
+    5   Pin Configuration and Functions ......................... 3
+                                                                                                    9.3 System Examples ................................................... 10
+    6   Specifications......................................................... 4
+         6.1    Absolute Maximum Ratings ...................................... 4             10 Power Supply Recommendations ..................... 13
+         6.2    ESD Ratings.............................................................. 4   11 Layout................................................................... 14
+         6.3    Recommended Operating Conditions....................... 4                           11.1 Layout Guidelines ................................................. 14
+         6.4    Thermal Information .................................................. 4            11.2 Layout Example .................................................... 14
+         6.5    Electrical Characteristics........................................... 5       12 Device and Documentation Support ................. 15
+         6.6    Switching Characteristics ......................................... 5               12.1    Related Links ........................................................ 15
+         6.7    Typical Characteristics .............................................. 5            12.2    Community Resources.......................................... 15
+    7   Parameter Measurement Information .................. 6                                      12.3    Trademarks ........................................................... 15
+                                                                                                    12.4    Electrostatic Discharge Caution ............................ 15
+    8   Detailed Description .............................................. 7
+                                                                                                    12.5    Glossary ................................................................ 15
+         8.1 Overview ................................................................... 7
+         8.2 Functional Block Diagram ......................................... 7             13 Mechanical, Packaging, and Orderable
+                                                                                                 Information ........................................................... 15
+
+
+
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+
+Changes from Revision C (November 2004) to Revision D                                                                                                                          Page
+
+•   Removed Ordering Information table .................................................................................................................................... 1
+•   Added ESD Ratings and Thermal Information tables, Feature Description section, Device Functional Modes,
+    Application and Implementation section, Power Supply Recommendations section, Layout section, Device and
+    Documentation Support section, and Mechanical, Packaging, and Orderable Information section. .................................... 1
+
+
+
+
+2        Submit Documentation Feedback                                                                         Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                                                       Product Folder Links: L293 L293D
+                                                                                                                                L293, L293D
+www.ti.com                                                                                     SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+5 Pin Configuration and Functions
+
+                                                                   NE Package
+                                                                   16-Pin PDIP
+                                                                    Top View
+
+
+                                                          1,2EN      1       16     VCC1
+                                                             1A      2       15     4A
+                                                             1Y      3       14     4Y
+                                         HEAT SINK AND               4       13         HEAT SINK AND
+                                              GROUND                 5       12         GROUND
+                                                              2Y     6       11     3Y
+                                                              2A     7       10     3A
+                                                           VCC2      8          9   3,4EN
+
+
+                                                                Pin Functions
+              PIN
+                                      TYPE                                                    DESCRIPTION
+NAME                   NO.
+1,2EN                    1               I        Enable driver channels 1 and 2 (active high input)
+<1:4>A              2, 7, 10, 15         I        Driver inputs, noninverting
+<1:4>Y              3, 6, 11, 14        O         Driver outputs
+3,4EN                    9               I        Enable driver channels 3 and 4 (active high input)
+                                                  Device ground and heat sink pin. Connect to printed-circuit-board ground plane with multiple
+GROUND              4, 5, 12, 13        —
+                                                  solid vias
+VCC1                    16              —         5-V supply for internal logic translation
+VCC2                     8              —         Power VCC for drivers 4.5 V to 36 V
+
+
+
+
+Copyright © 1986–2016, Texas Instruments Incorporated                                                    Submit Documentation Feedback           3
+                                                        Product Folder Links: L293 L293D
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                                         www.ti.com
+
+
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted) (1)
+                                                                                                        MIN               MAX             UNIT
+Supply voltage, VCC1 (2)                                                                                                  36               V
+Output supply voltage, VCC2                                                                                               36               V
+Input voltage, VI                                                                                                          7               V
+Output voltage, VO                                                                                       –3          VCC2 + 3              V
+Peak output current, IO (nonrepetitive, t ≤ 5 ms): L293                                                  –2                2               A
+Peak output current, IO (nonrepetitive, t ≤ 100 µs): L293D                                              –1.2              1.2              A
+Continuous output current, IO: L293                                                                      –1                1               A
+Continuous output current, IO: L293D                                                                    –600              600              mA
+Maximum junction temperature, TJ                                                                                          150              °C
+Storage temperature, Tstg                                                                               –65               150              °C
+
+(1)   Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+      only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under Recommended
+      Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2)   All voltage values are with respect to the network ground terminal.
+
+6.2 ESD Ratings
+                                                                                                                          VALUE            UNIT
+             Electrostatic         Human-body model (HBM), per ANSI/ESDA/JEDEC JS-001 (1)                                  ±2000
+V(ESD)                                                                                                                                       V
+             discharge             Charged-device model (CDM), per JEDEC specification JESD22-C101 (2)                     ±1000
+
+(1)   JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)   JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+                                                                                                        MIN         NOM         MAX         UNIT
+                                                                          VCC1                           4.5                        7
+              Supply voltage                                                                                                                    V
+                                                                          VCC2                         VCC1                        36
+                                                                          VCC1 ≤ 7 V                     2.3                    VCC1            V
+VIH           High-level input voltage
+                                                                          VCC1 ≥ 7 V                     2.3                        7           V
+VIL           Low-level output voltage                                                               –0.3 (1)                      1.5          V
+TA            Operating free-air temperature                                                               0                       70          °C
+
+(1)   The algebraic convention, in which the least positive (most negative) designated minimum, is used in this data sheet for logic voltage
+      levels.
+
+6.4 Thermal Information
+                                                                                                                L293, L293D
+                                           THERMAL METRIC (1)                                                    NE (PDIP)               UNIT
+                                                                                                                 16 PINS
+RθJA                Junction-to-ambient thermal resistance (2)                                                     36.4                  °C/W
+RθJC(top)           Junction-to-case (top) thermal resistance                                                      22.5                  °C/W
+RθJB                Junction-to-board thermal resistance                                                           16.5                  °C/W
+ψJT                 Junction-to-top characterization parameter                                                      7.1                  °C/W
+ψJB                 Junction-to-board characterization parameter                                                   16.3                  °C/W
+
+(1)   For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+      report, SPRA953.
+(2)   The package thermal impedance is calculated in accordance with JESD 51-7.
+
+
+4        Submit Documentation Feedback                                                       Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                                       Product Folder Links: L293 L293D
+                                                                                                                                                                   L293, L293D
+www.ti.com                                                                                                                      SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+6.5 Electrical Characteristics
+over operating free-air temperature range (unless otherwise noted)
+                     PARAMETER                                                                   TEST CONDITIONS                            MIN            TYP     MAX     UNIT
+                                                                                  L293: IOH = −1 A
+VOH          High-level output voltage                                                                                                VCC2 – 1.8      VCC2 – 1.4            V
+                                                                                  L293D: IOH = − 0.6 A
+                                                                                  L293: IOL = 1 A
+VOL          Low-level output voltage                                                                                                                        1.2    1.8     V
+                                                                                  L293D: IOL = 0.6 A
+VOKH         High-level output clamp voltage                                      L293D: IOK = –0.6 A                                                 VCC2 + 1.3            V
+VOKL         Low-level output clamp voltage                                       L293D: IOK = 0.6 A                                                         1.3            V
+                                                                 A                                                                                           0.2    100
+IIH          High-level input current                                             VI = 7 V                                                                                 µA
+                                                                 EN                                                                                          0.2     10
+                                                                 A                                                                                           –3     –10
+IIL          Low-level input current                                              VI = 0                                                                                   µA
+                                                                 EN                                                                                          –2    –100
+                                                                                                   All outputs at high level                                 13      22
+                                                                                                   All outputs at low level                                  35      60
+ICC1         Logic supply current                                                 IO = 0                                                                                   mA
+                                                                                                   All outputs at high
+                                                                                                                                                              8      24
+                                                                                                   impedance
+                                                                                                   All outputs at high level                                 14      24
+                                                                                                   All outputs at low level                                   2       6
+ICC2         Output supply current                                                IO = 0                                                                                   mA
+                                                                                                   All outputs at high
+                                                                                                                                                              2       4
+                                                                                                   impedance
+
+
+6.6 Switching Characteristics
+over operating free-air temperature range (unless otherwise noted) VCC1 = 5 V, VCC2 = 24 V, TA = 25°C
+                                    PARAMETER                                                                     TEST CONDITIONS               MIN         TYP    MAX     UNIT
+
+             Propagation delay time, low-to-                                L293NE, L293DNE                                                                 800
+tPLH                                                                                                                                                                        ns
+             high-level output from A input                                 L293DWP, L293N L293DN                                                           750
+
+             Propagation delay time, high-to-                               L293NE, L293DNE                                                                 400
+tPHL                                                                                                                                                                        ns
+             low-level output from A input                                  L293DWP, L293N L293DN                                                           200
+                                                                                                              CL = 30 pF,
+                                                                            L293NE, L293DNE                   See Figure 2                                  300
+             Transition time, low-to-high-level
+tTLH                                                                                                                                                                        ns
+             output                                                         L293DWP, L293N L293DN                                                           100
+
+             Transition time, high-to-low-level                             L293NE, L293DNE                                                                 300
+tTHL                                                                                                                                                                        ns
+             output                                                         L293DWP, L293N L293DN                                                           350
+
+
+
+6.7 Typical Characteristics
+                                                                            5
+                                            P TOT − Power Dissipation − W
+
+
+
+
+                                                                                                              With Infinite Heat Sink
+                                                                            4
+
+
+                                                                            3        Heat Sink With θJA = 25°C/W
+
+
+                                                                            2
+                                                                                                           Free Air
+
+                                                                            1
+
+
+                                                                            0
+                                                                            −50              0               50                100        150
+
+                                                                                       TA − Ambient Temperature − °C
+                                Figure 1. Maximum Power Dissipation vs Ambient Temperature
+
+
+
+Copyright © 1986–2016, Texas Instruments Incorporated                                                                                      Submit Documentation Feedback          5
+                                                                                    Product Folder Links: L293 L293D
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                                       www.ti.com
+
+
+7 Parameter Measurement Information
+
+                                                                                                      tf                       tr
+                                                                                                                                               3V
+                                                                                     90%                                       90%
+
+                     Input        5 V 24 V                                  Input      50%                                 50%
+                                                                                                     10%          10%
+                                                                                                                                               0
+                              VCC1 VCC2
+         Pulse                                                                                             tw
+       Generator             A
+                                                                                       tPHL                                           tPLH
+      (see Note B)
+                                             Y         Output                                                                                  VOH
+                                                                                               90%                                     90%
+                                                    CL = 30 pF
+                3V           EN                                                                            50%              50%
+                                                    (see Note A)
+                                                                          Output
+                                                                                                                10%      10%
+                                                                                                                                               VOL
+                                                                                              tTHL                                      tTLH
+
+                             TEST CIRCUIT                                                                  VOLTAGE WAVEFORMS
+    NOTES: A. CL includes probe and jig capacitance.
+           B. The pulse generator has the following characteristics: tr ≤ 10 ns, tf ≤ 10 ns, tw = 10 µs, PRR = 5 kHz, ZO = 50 Ω.
+
+                                             Figure 2. Test Circuit and Voltage Waveforms
+
+
+
+
+6         Submit Documentation Feedback                                                        Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                                       Product Folder Links: L293 L293D
+                                                                                                                                L293, L293D
+www.ti.com                                                                                    SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+8 Detailed Description
+
+8.1 Overview
+The L293 and L293D are quadruple high-current half-H drivers. These devices are designed to drive a wide array
+of inductive loads such as relays, solenoids, DC and bipolar stepping motors, as well as other high-current and
+high-voltage loads. All inputs are TTL compatible and tolerant up to 7 V.
+Each output is a complete totem-pole drive circuit, with a Darlington transistor sink and a pseudo-Darlington
+source. Drivers are enabled in pairs, with drivers 1 and 2 enabled by 1,2EN and drivers 3 and 4 enabled by
+3,4EN. When an enable input is high, the associated drivers are enabled, and their outputs are active and in
+phase with their inputs. When the enable input is low, those drivers are disabled, and their outputs are off and in
+the high-impedance state. With the proper data inputs, each pair of drivers forms a full-H (or bridge) reversible
+drive suitable for solenoid or motor applications.
+On the L293, external high-speed output clamp diodes should be used for inductive transient suppression. On
+the L293D, these diodes are integrated to reduce system complexity and overall system size. A VCC1 terminal,
+separate from VCC2, is provided for the logic inputs to minimize device power dissipation. The L293 and L293D
+are characterized for operation from 0°C to 70°C.
+
+8.2 Functional Block Diagram
+
+                                                                                                   VCC1
+
+                                                        1
+                                                        0        1                       16
+
+                                                                 2                       15                        M
+                                                        1                                             1
+                                                        0                                             0
+                                                                      1             4
+                                                                  3                      14
+
+                                                                  4                      13
+
+                                 M                                5                      12
+
+                                                                  6                      11
+
+                                                                      2             3
+                                                        1                                             1
+                                                                  7                      10           0
+                                                        0
+                                                                                          9           1            M
+                                                                  8
+                                                                                                      0
+
+
+                    VCC2
+            Output diodes are internal in L293D.
+
+8.3 Feature Description
+The L293x has TTL-compatible inputs and high voltage outputs for inductive load driving. Current outputs can get
+up to 2 A using the L293.
+
+
+
+
+Copyright © 1986–2016, Texas Instruments Incorporated                                                     Submit Documentation Feedback     7
+                                                            Product Folder Links: L293 L293D
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                                   www.ti.com
+
+
+8.4 Device Functional Modes
+Table 1 lists the fuctional modes of the L293x.
+
+                                          Table 1. Function Table (Each Driver) (1)
+                                                  INPUTS (2)
+                                                                                        OUTPUT (Y)
+                                          A                        EN
+                                          H                         H                         H
+                                          L                         H                         L
+                                          X                         L                         Z
+
+                              (1)   H = high level, L = low level, X = irrelevant, Z = high impedance (off)
+                              (2)   In the thermal shutdown mode, the output is in the high-impedance
+                                    state, regardless of the input levels.
+
+                                                 VCC1
+
+
+                                                         Current
+                                                         Source
+
+
+
+
+                                                Input
+
+
+
+
+                                                 GND
+
+                                      Figure 3. Schematic of Inputs for the L293x
+                                                  VCC2                                                                       VCC2
+
+
+
+
+                                                  Output                                                                     Output
+
+
+
+
+                                                  GND                                                                        GND
+     Figure 4. Schematic of Outputs for the L293                          Figure 5. Schematic of Outputs for the L293D
+
+
+
+
+8      Submit Documentation Feedback                                                       Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                                   Product Folder Links: L293 L293D
+                                                                                                                                           L293, L293D
+www.ti.com                                                                                               SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+9 Application and Implementation
+
+                                                           NOTE
+               Information in the following applications sections is not part of the TI component
+               specification, and TI does not warrant its accuracy or completeness. TI’s customers are
+               responsible for determining suitability of components for their purposes. Customers should
+               validate and test their design implementation to confirm system functionality.
+
+
+9.1 Application Information
+A typical application for the L293 device is driving a two-phase motor. Below is an example schematic displaying
+how to properly connect a two-phase motor to the L293 device.
+Provide a 5-V supply to VCC1 and valid logic input levels to data and enable inputs. VCC2 must be connected to a
+power supply capable of supplying the needed current and voltage demand for the loads connected to the
+outputs.
+
+9.2 Typical Application
+                                                                       5V                    24 V
+                                                                                               VCC2
+                                                                            VCC1
+                                                                         16                    8
+                                                         10 kΩ
+
+                                                          1,2EN
+                                                                 1
+
+
+
+
+                                                            1A                                      1Y
+                                       Control A
+                                                                 2                                  3
+
+
+
+
+                                                                                                                 Motor
+
+                                                            2A                                      2Y
+                                                                 7                                  6
+
+
+
+                                                          3,4EN
+                                                                 9
+
+
+
+                                                            3A                                      3Y
+                                       Control B
+                                                             10                                     11
+
+
+
+
+                                                            4A                                      4Y
+                                                             15                                     14
+
+                                                                      Thermal
+                                                                     Shutdown
+
+
+
+                                                                              4, 5, 12, 13
+
+
+                                                                        GND
+
+
+
+                                                   Figure 6. Two-Phase Motor Driver (L293)
+
+9.2.1 Design Requirements
+The design techniques in the application above as well as the applications below should fall within the following
+design requirements.
+1. VCC1 should fall within the limits described in the Recommended Operating Conditions.
+2. VCC2 should fall within the limits described in the Recommended Operating Conditions.
+3. The current per channel should not exceed 1 A for the L293 (600mA for the L293D).
+
+9.2.2 Detailed Design Procedure
+When designing with the L293 or L293D, careful consideration should be made to ensure the device does not
+exceed the operating temperature of the device. Proper heatsinking will allow for operation over a larger range of
+current per channel. Refer to the Power Supply Recommendations as well as the Layout Example.
+
+Copyright © 1986–2016, Texas Instruments Incorporated                                                                Submit Documentation Feedback     9
+                                                          Product Folder Links: L293 L293D
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                                                                                           www.ti.com
+
+
+Typical Application (continued)
+9.2.3 Application Curve
+Refer to Power Supply Recommendations for additional information with regards to appropriate power
+dissipation. Figure 7 describes thermal dissipation based on Figure 14.
+                                                                 4                                                                                  80
+
+
+
+
+                                                                                                                                                         θJA − Thermal Resistance − °C/W
+                                P TOT − Power Dissipation − W
+                                                                                       θJA
+                                                                 3                                                                                  60
+
+
+
+                                                                 2                                                                                  40
+                                                                            PTOT (TA = 70°C)
+
+
+
+                                                                 1                                                                                  20
+
+
+
+                                                                 0                                                                                  0
+                                                                     0           10            20                  30      40               50
+
+                                                                                               Side             − mm
+                         Figure 7. Maximum Power and Junction vs Thermal Resistance
+
+9.3 System Examples
+9.3.1 L293D as a Two-Phase Motor Driver
+Figure 8 below depicts a typical setup for using the L293D as a two-phase motor driver. Refer to the
+Recommended Operating Conditions when considering the appropriate input high and input low voltage levels to
+enable each channel of the device.
+                                                                                                    5V                   24 V
+
+
+                                                                                                         VCC1
+                                                                                                                            VCC2
+                                                                                   10 kΩ
+                                                                                                     16                         8
+
+
+                                                                                      1,2EN
+                                                                                          1
+
+
+
+
+                                                                                        1A                                          1Y
+                                                                Control A
+                                                                                         2                                          3
+
+
+
+
+                                                                                                                                            Motor
+
+                                                                                        2A                                          2Y
+                                                                                         7                                          6
+
+
+
+                                                                                      3,4EN
+                                                                                           9
+
+
+
+                                                                                        3A                                          3Y
+                                                                Control B
+                                                                                        10                                          11
+
+
+
+
+                                                                                        4A                                          4Y
+                                                                                        15                                          14
+
+                                                                                                 Thermal
+                                                                                                Shutdown
+
+
+
+                                                                                                          4, 5, 12, 13
+                                                                                                           GND
+
+
+
+                                                                     Figure 8. Two-Phase Motor Driver (L293D)
+
+
+
+10     Submit Documentation Feedback                                                                                                     Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                                                                  Product Folder Links: L293 L293D
+                                                                                                                                                    L293, L293D
+www.ti.com                                                                                            SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+System Examples (continued)
+9.3.2 DC Motor Controls
+Figure 9 and Figure 10 below depict a typical setup for using the L293 device as a controller for DC motors. Note
+that the L293 device can be used as a simple driver for a motor to turn on and off in one direction, and can also
+be used to drive a motor in both directions. Refer to the function tables below to understand unidirectional vs
+bidirectional motor control. Refer to the Recommended Operating Conditions when considering the appropriate
+input high and input low voltage levels to enable each channel of the device.
+                                            VCC2
+                                                                   SES5001
+                                                                              M1
+                                                                                           SES5001
+                                                                                                              M2
+
+                                                              3A                  4A
+                                                                10           11    15            14
+                                                                                                          16
+                                                                                                                   VCC1
+                                                         8
+
+                                                                         1/2 L293                         9
+                                                                                                                   EN
+                                                                                           4, 5, 12, 13
+                                                                              GND
+              Connections to ground and to supply voltage
+
+                                                        Figure 9. DC Motor Controls
+
+
+                                                Table 2. Unidirectional DC Motor Control
+         EN                   3A                              M1 (1)                                      4A                                  M2
+          H                   H                         Fast motor stop                                    H                                  Run
+          H                   L                                   run                                         L                       Fast motor stop
+          L                   X                     Free-running motor stop                                   X                  Free-running motor stop
+
+(1)   L = low, H = high, X = don’t care
+
+                                             VCC2
+                                                                        2 × SES5001
+
+
+                                                                                  M
+
+                                                                        2 × SES5001
+                                                             2A                                      1A
+                                                                  7      6             3         2
+                                                                                                          16
+                                                                                                                   VCC1
+                                                         8
+
+                                                                        1/2 L293                          1
+                                                                                                                   EN
+                                                                                      4, 5, 12, 13
+                                                                             GND
+
+                                             Figure 10. Bidirectional DC Motor Control
+
+
+                                                Table 3. Bidrectional DC Motor Control
+              EN                           1A                                2A                                                FUNCTION (1)
+               H                            L                                 H                                                  Turn right
+               H                            H                                 L                                                   Turn left
+
+(1)   L = low, H = high, X = don’t care
+Copyright © 1986–2016, Texas Instruments Incorporated                                                                     Submit Documentation Feedback      11
+                                                         Product Folder Links: L293 L293D
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                              www.ti.com
+
+
+                                  Table 3. Bidrectional DC Motor Control (continued)
+           EN                        1A                       2A                                     FUNCTION (1)
+           H                           L                      L                                     Fast motor stop
+           H                         H                        H                                     Fast motor stop
+            L                        X                        X                                 Free-running motor stop
+
+
+9.3.3 Bipolar Stepping-Motor Control
+Figure 11 below depicts a typical setup for using the L293D as a two-phase motor driver. Refer to the
+Recommended Operating Conditions when considering the appropriate input high and input low voltage levels to
+enable each channel of the device.
+                          IL1/IL2 = 300 mA
+
+
+
+
+                C1                                                 L293           16
+                                                   1                                            VCC1
+           0.22 µF
+                                                   2                              15
+
+                        D5          D1                    +               +                       D8            D4
+
+                                                   3                              14
+                                                   4                              13
+
+                             L1      IL1           5                              12                   L2         IL2
+          VCC2
+
+                                                   6                              11
+
+
+                                                          +               +
+                                                   7                              10
+                                                                                                  D7            D3
+                                                   8                              9
+                        D6          D2
+
+
+
+             D1−D8 = SES5001
+
+                                       Figure 11. Bipolar Stepping-Motor Control
+
+
+
+
+12     Submit Documentation Feedback                                                  Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                               Product Folder Links: L293 L293D
+                                                                                                                        L293, L293D
+www.ti.com                                                                             SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+10 Power Supply Recommendations
+VCC1 is 5 V ± 0.5 V and VCC2 can be same supply as VCC1 or a higher voltage supply with peak voltage up to 36
+V. Bypass capacitors of 0.1 uF or greater should be used at VCC1 and VCC2 pins. There are no power up or
+power down supply sequence order requirements.
+Properly heatsinking the L293 when driving high-current is critical to design. The Rthj-amp of the L293 can be
+reduced by soldering the GND pins to a suitable copper area of the printed circuit board or to an external heat
+sink.
+Figure 14 shows the maximum package power PTOT and the θJA as a function of the side of two equal square
+copper areas having a thickness of 35 μm (see Figure 14). In addition, an external heat sink can be used (see
+Figure 12).
+During soldering, the pin temperature must not exceed 260°C, and the soldering time must not exceed 12
+seconds.
+The external heatsink or printed circuit copper area must be connected to electrical ground.
+
+
+                                                                                       17.0 mm
+
+
+
+
+                                               11.9 mm
+
+
+
+
+                                                                            38.0 mm
+
+
+
+
+                             Figure 12. External Heat Sink Mounting Example (θJA = 25°C/W)
+
+
+
+
+Copyright © 1986–2016, Texas Instruments Incorporated                                            Submit Documentation Feedback      13
+                                                        Product Folder Links: L293 L293D
+L293, L293D
+SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016                                                                               www.ti.com
+
+
+11 Layout
+
+11.1 Layout Guidelines
+Place the device near the load to keep output traces short to reduce EMI. Use solid vias to transfer heat from
+ground pins to ground plane of the printed-circuit-board.
+
+11.2 Layout Example
+                                                                                      GND
+
+                                                                                       0.1 μF
+                                       TTL Logic    1 1,2EN           VCC1 16               5V
+
+                                       TTL Logic    2 1A                 4A 15        TTL Logic
+
+
+                                       1 Ampere     3 1Y                 4Y 14        1 Ampere
+
+
+                                                    4                         13
+                                       GND
+                                       VIAS
+                                                    5                         12
+
+                                       1 Ampere     6 2Y                 3Y 11        1 Ampere
+
+
+                                       TTL Logic    7 2A                 3A 10        TTL Logic
+
+
+                                       5V to 36V    8 VCC2            3,4EN 9         TTL Logic
+
+                                                 1 μF
+                                              GND
+
+                                                   Figure 13. Layout Diagram
+
+                                    Copper Area 35-µm Thickness
+
+
+
+
+                                              Printed Circuit Board
+
+                Figure 14. Example of Printed-Circuit-Board Copper Area (Used as Heat Sink)
+
+
+
+
+14     Submit Documentation Feedback                                                   Copyright © 1986–2016, Texas Instruments Incorporated
+
+                                                   Product Folder Links: L293 L293D
+                                                                                                                             L293, L293D
+www.ti.com                                                                                  SLRS008D – SEPTEMBER 1986 – REVISED JANUARY 2016
+
+
+12 Device and Documentation Support
+
+12.1 Related Links
+The table below lists quick access links. Categories include technical documents, support and community
+resources, tools and software, and quick access to sample or buy.
+
+                                                             Table 4. Related Links
+                                                                             TECHNICAL                 TOOLS &             SUPPORT &
+        PARTS             PRODUCT FOLDER                SAMPLE & BUY
+                                                                             DOCUMENTS                SOFTWARE             COMMUNITY
+         L293                   Click here                Click here           Click here              Click here            Click here
+         L293D                  Click here                Click here           Click here              Click here            Click here
+
+
+12.2 Community Resources
+The following links connect to TI community resources. Linked contents are provided "AS IS" by the respective
+contributors. They do not constitute TI specifications and do not necessarily reflect TI's views; see TI's Terms of
+Use.
+TI E2E™ Online Community TI's Engineer-to-Engineer (E2E) Community. Created to foster collaboration
+           among engineers. At e2e.ti.com, you can ask questions, share knowledge, explore ideas and help
+           solve problems with fellow engineers.
+Design Support TI's Design Support Quickly find helpful E2E forums along with design support tools and
+           contact information for technical support.
+
+12.3 Trademarks
+E2E is a trademark of Texas Instruments.
+All other trademarks are the property of their respective owners.
+12.4 Electrostatic Discharge Caution
+          These devices have limited built-in ESD protection. The leads should be shorted together or the device placed in conductive foam
+          during storage or handling to prevent electrostatic damage to the MOS gates.
+
+
+12.5 Glossary
+SLYZ022 — TI Glossary.
+   This glossary lists and explains terms, acronyms, and definitions.
+
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+
+
+
+
+Copyright © 1986–2016, Texas Instruments Incorporated                                                 Submit Documentation Feedback       15
+                                                         Product Folder Links: L293 L293D
+                                                                                                                                                                      PACKAGE OPTION ADDENDUM
+
+       www.ti.com                                                                                                                                                                                                   10-Nov-2025
+
+
+
+
+PACKAGING INFORMATION
+
+       Orderable part number          Status     Material type      Package | Pins      Package qty | Carrier        RoHS             Lead finish/              MSL rating/               Op temp (°C)          Part marking
+                                        (1)            (2)                                                             (3)            Ball material             Peak reflow                                           (6)
+                                                                                                                                            (4)                      (5)
+
+              L293DNE                 Active      Production        PDIP (NE) | 16            25 | TUBE               Yes                NIPDAU              N/A for Pkg Type                0 to 70              L293DNE
+             L293DNE.A                Active      Production        PDIP (NE) | 16            25 | TUBE               Yes                NIPDAU              N/A for Pkg Type                0 to 70              L293DNE
+             L293DNEE4                Active      Production        PDIP (NE) | 16            25 | TUBE               Yes                NIPDAU              N/A for Pkg Type                0 to 70              L293DNE
+               L293NE                 Active      Production        PDIP (NE) | 16            25 | TUBE               Yes                NIPDAU              N/A for Pkg Type                0 to 70               L293NE
+              L293NE.A                Active      Production        PDIP (NE) | 16            25 | TUBE               Yes                NIPDAU              N/A for Pkg Type                0 to 70               L293NE
+              L293NEE4                Active      Production        PDIP (NE) | 16            25 | TUBE               Yes                NIPDAU              N/A for Pkg Type                0 to 70               L293NE
+
+(1)
+      Status: For more details on status, see our product life cycle.
+
+(2)
+   Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+
+(3)
+      RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+
+(4)
+   Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+
+(5)
+  MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+
+(6)
+      Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+
+
+
+                                                                                                          Addendum-Page 1
+                               PACKAGE OPTION ADDENDUM
+
+www.ti.com                                       10-Nov-2025
+
+
+
+
+             Addendum-Page 2
+                                                               PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                   23-May-2025
+
+
+
+TUBE
+
+       T - Tube
+        height                                                     L - Tube length
+
+
+                      W - Tube
+                       width
+
+
+         B - Alignment groove width
+
+*All dimensions are nominal
+             Device           Package Name   Package Type   Pins       SPQ     L (mm)   W (mm)   T (µm)   B (mm)
+         L293DNE                  NE            PDIP         16         25      506     13.97    11230     4.32
+        L293DNE.A                 NE            PDIP         16         25      506     13.97    11230     4.32
+        L293DNEE4                 NE            PDIP         16         25      506     13.97    11230     4.32
+          L293NE                  NE            PDIP         16         25      506     13.97    11230     4.32
+         L293NE.A                 NE            PDIP         16         25      506     13.97    11230     4.32
+        L293NEE4                  NE            PDIP         16         25      506     13.97    11230     4.32
+
+
+
+
+                                                       Pack Materials-Page 1
+                                         IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+
+                                                Copyright © 2025, Texas Instruments Incorporated
+                                                                Last updated 10/2025
+

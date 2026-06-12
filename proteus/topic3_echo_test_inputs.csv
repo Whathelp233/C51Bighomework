@@ -1,0 +1,5 @@
+scenario,source_mode,initial_delay_us,high_time_us,period_us,estimated_distance_cm,expected_lcd,expected_motor,notes
+no_echo,hold_low,0,0,0,none,NO ECHO,stop,Keep Echo low to verify timeout path
+danger_500us,pulse,2000,500,20000,8,OBSTACLE AVOID,stop_back_right_stop,Shorter than 870 us threshold
+threshold_870us,pulse,2000,870,20000,15,DIST:015cm,boundary_check,Equal to threshold should be treated as not less than danger by current compare
+safe_2000us,pulse,2000,2000,20000,34,PATH CLEAR,forward,Wider than 870 us threshold

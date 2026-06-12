@@ -1,0 +1,24 @@
+ref,qty,proteus_search,description,value_or_setting,required,notes
+U1,1,AT89C52,8051 compatible MCU,12 MHz clock; Program File build/topic3_car.hex,yes,Use AT89C51 if AT89C52 is unavailable
+U2,1,LM016L,LCD1602 display,4-bit mode; RW tied to GND,yes,HD44780 compatible
+U3,1,L293D,Dual DC motor driver,VCC1 5 V; VCC2 5 V to 9 V,yes,All grounds common
+U4,1,HC-SR04,Ultrasonic ranging module,Trig P3.4; Echo P3.5,yes,Use V1 pulse source if unavailable
+V1,1,PULSE,Echo substitute pulse source,500 us / 870 us / 2000 us tests,optional,Connect output to US_ECHO only when HC-SR04 is missing
+D1-D8,8,LED-RED,Active-low LED flow indicators,Anodes to VCC; cathodes to P1 through resistors,yes,LED0 maps to P1.0
+R1-R8,8,RES,LED current limiting resistors,220 ohm to 1 kohm,yes,One resistor per LED
+SW1,1,BUTTON,KEY_UP active-low button,Connect KEY_UP_N to GND when pressed,yes,Maps to P3.0
+SW2,1,BUTTON,KEY_DOWN active-low button,Connect KEY_DOWN_N to GND when pressed,yes,Maps to P3.1
+SW3,1,BUTTON,KEY_START active-low button,Connect KEY_START_N to GND when pressed,yes,Maps to P3.2
+SW4,1,BUTTON,KEY_MODE active-low button,Connect KEY_MODE_N to GND when pressed,yes,Maps to P3.3
+R9-R12,4,RES,Key pull-up resistors,4.7 kohm to 10 kohm,yes,Pull each key net to VCC_5V
+RP1,1,RESPACK or RESPACK-8,P0 pull-up network,4.7 kohm to 10 kohm,optional,Needed if selected MCU model treats P0 as open-drain
+M1,1,MOTOR-DC,Left DC motor,Connected to L293D 1Y/2Y,yes,HC01-48 physical equivalent
+M2,1,MOTOR-DC,Right DC motor,Connected to L293D 3Y/4Y,yes,HC01-48 physical equivalent
+Y1,1,CRYSTAL,MCU crystal,12 MHz,yes,Timer0 distance conversion assumes 12 MHz
+C1-C2,2,CAP,Crystal load capacitors,about 30 pF,yes,Connect from XTAL pins to GND
+C3,1,CAP-ELEC,Reset capacitor,about 10 uF,yes,Power-on reset network
+R13,1,RES,Reset resistor,about 10 kohm,yes,Reset pull-down in this checklist
+VR1,1,POT-HG or RES,LCD contrast setting,10 kohm potentiometer or fixed divider,yes,Connect wiper to LCD VEE
+VS1,1,VCC,Logic supply,5 V,yes,MCU LCD keys ultrasonic L293D logic
+VS2,1,POWER,Motor supply,5 V to 9 V,yes,Connect to L293D VCC2
+GND,1,GROUND,Common ground,0 V,yes,Logic and motor grounds must be common

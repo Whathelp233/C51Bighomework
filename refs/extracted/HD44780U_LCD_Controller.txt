@@ -1,0 +1,3164 @@
+                           HD44780U (LCD-II)
+          (Dot Matrix Liquid Crystal Display Controller/Driver)
+
+
+                                                                                       ADE-207-272(Z)
+                                                                                                 '99.9
+                                                                                              Rev. 0.0
+
+Description
+
+The HD44780U dot-matrix liquid crystal display controller and driver LSI displays alphanumerics,
+Japanese kana characters, and symbols. It can be configured to drive a dot-matrix liquid crystal display
+under the control of a 4- or 8-bit microprocessor. Since all the functions such as display RAM, character
+generator, and liquid crystal driver, required for driving a dot-matrix liquid crystal display are internally
+provided on one chip, a minimal system can be interfaced with this controller/driver.
+
+A single HD44780U can display up to one 8-character line or two 8-character lines.
+
+The HD44780U has pin function compatibility with the HD44780S which allows the user to easily replace
+an LCD-II with an HD44780U. The HD44780U character generator ROM is extended to generate 208 5 ×
+8 dot character fonts and 32 5 × 10 dot character fonts for a total of 240 different character fonts.
+
+The low power supply (2.7V to 5.5V) of the HD44780U is suitable for any portable battery-driven product
+requiring low power dissipation.
+
+Features
+
+• 5 × 8 and 5 × 10 dot matrix possible
+• Low power operation support:
+   2.7 to 5.5V
+• Wide range of liquid crystal display driver power
+   3.0 to 11V
+• Liquid crystal drive waveform
+   A (One line frequency AC waveform)
+• Correspond to high speed MPU bus interface
+   2 MHz (when VCC = 5V)
+• 4-bit or 8-bit MPU interface enabled
+• 80 × 8-bit display RAM (80 characters max.)
+• 9,920-bit character generator ROM for a total of 240 character fonts
+   208 character fonts (5 × 8 dot)
+   32 character fonts (5 × 10 dot)
+
+
+
+
+                                                                                                           1
+HD44780U
+• 64 × 8-bit character generator RAM
+   8 character fonts (5 × 8 dot)
+   4 character fonts (5 × 10 dot)
+• 16-common × 40-segment liquid crystal display driver
+• Programmable duty cycles
+   1/8 for one line of 5 × 8 dots with cursor
+   1/11 for one line of 5 × 10 dots with cursor
+   1/16 for two lines of 5 × 8 dots with cursor
+• Wide range of instruction functions:
+   Display clear, cursor home, display on/off, cursor on/off, display character blink, cursor shift,
+      display shift
+• Pin function compatibility with HD44780S
+• Automatic reset circuit that initializes the controller/driver after power on
+• Internal oscillator with external resistors
+• Low power consumption
+
+
+Ordering Information
+Type No.                   Package              CGROM
+HD44780UA00FS              FP-80B               Japanese standard font
+HCD44780UA00               Chip
+HD44780UA00TF              TFP-80F
+HD44780UA02FS              FP-80B               European standard font
+HCD44780UA02               Chip
+HD44780UA02TF              TFP-80F
+HD44780UBxxFS              FP-80B               Custom font
+HCD44780UBxx               Chip
+HD44780UBxxTF              TFP-80F
+Note: xx: ROM code No.
+
+
+
+
+2
+                                                                                                            HD44780U
+
+HD44780U Block Diagram
+
+                                   OSC1 OSC2
+                                                                                                              CL1
+                                                                                                              CL2
+                                                                                                              M
+              Reset
+              circuit
+                                                                          Timing
+               ACL                     CPG                               generator
+
+                             Instruction                            7
+                            register (IR)                                                                     D
+                        8
+
+
+                                                      Display                                               COM1 to
+            MPU             Instruction
+                                                     data RAM                         16-bit    Common      COM16
+   RS       inter-           decoder
+                                                     (DDRAM)                           shift     signal
+   R/W       face                                    80 × 8 bits                     register    driver
+   E
+
+
+                                     Address                7                                               SEG1 to
+                                     counter                              40-bit     40-bit     Segment     SEG40
+                                                            8
+                              7                                            shift     latch       signal
+   DB4 to                                                                register    circuit     driver
+   DB7
+                                            7
+            Input/      8    Data                     8
+   DB0 to   output          register
+                                                                               40
+   DB3      buffer            (DR)
+                                                8           8                                   LCD drive
+                                                                                                 voltage
+                              Busy                                                               selector
+                              flag
+
+
+                                  Character              Character          Cursor
+                                  generator              generator           and
+                                    RAM                    ROM
+                                                                             blink
+                                  (CGRAM)                (CGROM)           controller
+                                   64 bytes              9,920 bits
+   GND
+                                       5                        5
+
+
+                                                    Parallel/serial converter
+                                                              and
+                                                        attribute circuit
+
+   VCC
+
+                                        V1          V2     V3       V4    V5
+
+
+
+
+                                                                                                                      3
+HD44780U
+
+HD44780U Pin Arrangement (FP-80B)
+
+
+
+
+                    80 SEG23
+                               79 SEG24
+                                          78 SEG25
+                                                     77 SEG26
+                                                                76 SEG27
+                                                                           75 SEG28
+                                                                                      74 SEG29
+                                                                                                 73 SEG30
+                                                                                                            72 SEG31
+                                                                                                                       71 SEG32
+                                                                                                                                  70 SEG33
+                                                                                                                                             69 SEG34
+                                                                                                                                                        68 SEG35
+                                                                                                                                                                   67 SEG36
+                                                                                                                                                                              66 SEG37
+                                                                                                                                                                                         65 SEG38
+         SEG22 1                                                                                                                                                                                    64 SEG39
+         SEG21 2                                                                                                                                                                                    63 SEG40
+         SEG20 3                                                                                                                                                                                    62 COM16
+         SEG19 4                                                                                                                                                                                    61 COM15
+         SEG18 5                                                                                                                                                                                    60 COM14
+         SEG17 6                                                                                                                                                                                    59 COM13
+         SEG16 7                                                                                                                                                                                    58 COM12
+         SEG15 8                                                                                                                                                                                    57 COM11
+         SEG14 9                                                                                                                                                                                    56 COM10
+         SEG13 10                                                                                                                                                                                   55 COM9
+         SEG12 11                                                                                                                                                                                   54 COM8
+         SEG11 12                                                                      FP-80B                                                                                                       53 COM7
+         SEG10 13                                                                     (Top view)                                                                                                    52 COM6
+          SEG9 14                                                                                                                                                                                   51 COM5
+          SEG8 15                                                                                                                                                                                   50 COM4
+          SEG7 16                                                                                                                                                                                   49 COM3
+          SEG6 17                                                                                                                                                                                   48 COM2
+          SEG5 18                                                                                                                                                                                   47 COM1
+          SEG4 19                                                                                                                                                                                   46 DB7
+          SEG3 20                                                                                                                                                                                   45 DB6
+          SEG2 21                                                                                                                                                                                   44 DB5
+          SEG1 22                                                                                                                                                                                   43 DB4
+          GND 23                                                                                                                                                                                    42 DB3
+          OSC1 24                                                                                                                                                                                   41 DB2
+                    OSC2 25
+                      V1 26
+                      V2 27
+                      V3 28
+                      V4 29
+                      V5 30
+                     CL1 31
+                     CL2 32
+                     VCC 33
+                       M 34
+                       D 35
+                      RS 36
+                     R/W 37
+                       E 38
+                     DB0 39
+                     DB1 40
+
+
+
+
+4
+                                                                                                                    HD44780U
+
+HD44780U Pin Arrangement (TFP-80F)
+
+
+
+
+                SEG21
+                SEG22
+                SEG23
+                SEG24
+                SEG25
+                SEG26
+                SEG27
+                SEG28
+                SEG29
+                SEG30
+                SEG31
+                SEG32
+                SEG33
+                SEG34
+                SEG35
+                SEG36
+                SEG37
+                SEG38
+                SEG39
+                SEG40
+                80
+                     79
+                          78
+                               77
+                                    76
+                                         75
+                                              74
+                                                   73
+                                                        72
+                                                             71
+                                                                  70
+                                                                       69
+                                                                            68
+                                                                                 67
+                                                                                      66
+                                                                                           65
+                                                                                                64
+                                                                                                     63
+                                                                                                          62
+                                                                                                               61
+   SEG20   1                                                                                                        60   COM16
+   SEG19   2                                                                                                        59   COM15
+   SEG18   3                                                                                                        58   COM14
+   SEG17   4                                                                                                        57   COM13
+   SEG16   5                                                                                                        56   COM12
+   SEG15   6                                                                                                        55   COM11
+   SEG14   7                                                                                                        54   COM10
+   SEG13   8                                                                                                        53   COM9
+   SEG12   9                                                                                                        52   COM8
+   SEG11   10                                            TFP-80F                                                    51   COM7
+   SEG10   11                                           (Top view)                                                  50   COM6
+    SEG9   12                                                                                                       49   COM5
+    SEG8   13                                                                                                       48   COM4
+    SEG7   14                                                                                                       47   COM3
+    SEG6   15                                                                                                       46   COM2
+    SEG5   16                                                                                                       45   COM1
+    SEG4   17                                                                                                       44   DB7
+    SEG3   18                                                                                                       43   DB6
+    SEG2   19                                                                                                       42   DB5
+    SEG1   20                                                                                                       41   DB4
+                21
+                     22
+                          23
+                               24
+                                    25
+                                         26
+                                              27
+                                                   28
+                                                        29
+                                                             30
+                                                                  31
+                                                                       32
+                                                                            33
+                                                                                 34
+                                                                                      35
+                                                                                           36
+                                                                                                37
+                                                                                                     38
+                                                                                                          39
+                                                                                                               40
+                 GND
+                OSC1
+                OSC2
+                   V1
+                   V2
+                   V3
+                   V4
+                   V5
+                 CL1
+                 CL2
+                  VCC
+                    M
+                    D
+                   RS
+                 R/W
+                    E
+                 DB0
+                 DB1
+                 DB2
+                 DB3
+
+
+
+
+                                                                                                                                 5
+HD44780U
+
+HD44780U Pad Arrangement
+
+                             Chip size:    4.90 × 4.90 mm2
+                             Coordinate: Pad center (µm)
+                             Origin:       Chip center
+                             Pad size:     114 × 114 µm2
+
+               2    1   80                                   63
+
+
+
+
+           Y
+
+
+
+
+                                       Type code
+
+
+
+                         HD44780U
+
+
+
+
+               23                                            42
+                                            X
+
+
+
+
+6
+                                                                     HD44780U
+
+HCD44780U Pad Location Coordinates
+                           Coordinate                               Coordinate
+Pad No.   Function   X (um)     Y (um)   Pad No.   Function   X (um)     Y (um)
+ 1        SEG22      –2100       2313    41        DB2         2070      –2290
+ 2        SEG21      –2280       2313    42        DB3         2260      –2290
+ 3        SEG20      –2313       2089    43        DB4         2290      –2099
+ 4        SEG19      –2313       1833    44        DB5         2290      –1883
+ 5        SEG18      –2313       1617    45        DB6         2290      –1667
+ 6        SEG17      –2313       1401    46        DB7         2290      –1452
+ 7        SEG16      –2313       1186    47        COM1        2313      –1186
+ 8        SEG15      –2313        970    48        COM2        2313       –970
+ 9        SEG14      –2313        755    49        COM3        2313       –755
+10        SEG13      –2313        539    50        COM4        2313       –539
+11        SEG12      –2313        323    51        COM5        2313       –323
+12        SEG11      –2313        108    52        COM6        2313       –108
+13        SEG10      –2313       –108    53        COM7        2313        108
+14        SEG9       –2313       –323    54        COM8        2313        323
+15        SEG8       –2313       –539    55        COM9        2313        539
+16        SEG7       –2313       –755    56        COM10       2313        755
+17        SEG6       –2313       –970    57        COM11       2313        970
+18        SEG5       –2313      –1186    58        COM12       2313       1186
+19        SEG4       –2313      –1401    59        COM13       2313       1401
+20        SEG3       –2313      –1617    60        COM14       2313       1617
+21        SEG2       –2313      –1833    61        COM15       2313       1833
+22        SEG1       –2313      –2073    62        COM16       2313       2095
+23        GND        –2280      –2290    63        SEG40       2296       2313
+24        OSC1       –2080      –2290    64        SEG39       2100       2313
+25        OSC2       –1749      –2290    65        SEG38       1617       2313
+26        V1         –1550      –2290    66        SEG37       1401       2313
+27        V2         –1268      –2290    67        SEG36       1186       2313
+28        V3          –941      –2290    68        SEG35        970       2313
+29        V4          –623      –2290    69        SEG34        755       2313
+30        V5          –304      –2290    70        SEG33        539       2313
+31        CL1          –48      –2290    71        SEG32        323       2313
+32        CL2          142      –2290    72        SEG31        108       2313
+33        VCC          309      –2290    73        SEG30       –108       2313
+34        M            475      –2290    74        SEG29       –323       2313
+35        D            665      –2290    75        SEG28       –539       2313
+36        RS           832      –2290    76        SEG27       –755       2313
+37        R/W         1022      –2290    77        SEG26       –970       2313
+38        E           1204      –2290    78        SEG25      –1186       2313
+39        DB0         1454      –2290    79        SEG24      –1401       2313
+   40     DB1         1684      –2290    80        SEG23      –1617       2313
+
+
+
+
+                                                                                  7
+HD44780U
+
+Pin Functions
+                No. of         Device
+Signal          Lines    I/O   Interfaced with    Function
+RS              1        I     MPU                Selects registers.
+                                                  0: Instruction register (for write) Busy flag:
+                                                     address counter (for read)
+                                                  1: Data register (for write and read)
+R/W             1        I     MPU                Selects read or write.
+                                                  0: Write
+                                                  1: Read
+E               1        I     MPU                Starts data read/write.
+DB4 to DB7      4        I/O   MPU                Four high order bidirectional tristate data bus
+                                                  pins. Used for data transfer and receive between
+                                                  the MPU and the HD44780U. DB7 can be used
+                                                  as a busy flag.
+DB0 to DB3      4        I/O   MPU                Four low order bidirectional tristate data bus pins.
+                                                  Used for data transfer and receive between the
+                                                  MPU and the HD44780U.
+                                                  These pins are not used during 4-bit operation.
+CL1             1        O     Extension driver   Clock to latch serial data D sent to the extension
+                                                  driver
+CL2             1        O     Extension driver   Clock to shift serial data D
+M               1        O     Extension driver   Switch signal for converting the liquid crystal
+                                                  drive waveform to AC
+D               1        O     Extension driver   Character pattern data corresponding to each
+                                                  segment signal
+COM1 to COM16 16         O     LCD                Common signals that are not used are changed
+                                                  to non-selection waveforms. COM9 to COM16
+                                                  are non-selection waveforms at 1/8 duty factor
+                                                  and COM12 to COM16 are non-selection
+                                                  waveforms at 1/11 duty factor.
+SEG1 to SEG40 40         O     LCD                Segment signals
+V1 to V5        5        —     Power supply       Power supply for LCD drive
+                                                  VCC –V5 = 11 V (max)
+VCC, GND        2        —     Power supply       VCC: 2.7V to 5.5V, GND: 0V
+OSC1, OSC2      2        —     Oscillation        When crystal oscillation is performed, a resistor
+                               resistor clock     must be connected externally. When the pin input
+                                                  is an external clock, it must be input to OSC1.
+
+
+
+
+8
+                                                                                             HD44780U
+
+Function Description
+
+Registers
+
+The HD44780U has two 8-bit registers, an instruction register (IR) and a data register (DR).
+
+The IR stores instruction codes, such as display clear and cursor shift, and address information for display
+data RAM (DDRAM) and character generator RAM (CGRAM). The IR can only be written from the MPU.
+
+The DR temporarily stores data to be written into DDRAM or CGRAM and temporarily stores data to be
+read from DDRAM or CGRAM. Data written into the DR from the MPU is automatically written into
+DDRAM or CGRAM by an internal operation. The DR is also used for data storage when reading data
+from DDRAM or CGRAM. When address information is written into the IR, data is read and then stored
+into the DR from DDRAM or CGRAM by an internal operation. Data transfer between the MPU is then
+completed when the MPU reads the DR. After the read, data in DDRAM or CGRAM at the next address is
+sent to the DR for the next read from the MPU. By the register selector (RS) signal, these two registers can
+be selected (Table 1).
+
+
+Busy Flag (BF)
+
+When the busy flag is 1, the HD44780U is in the internal operation mode, and the next instruction will not
+be accepted. When RS = 0 and R/W = 1 (Table 1), the busy flag is output to DB7. The next instruction
+must be written after ensuring that the busy flag is 0.
+
+
+Address Counter (AC)
+
+The address counter (AC) assigns addresses to both DDRAM and CGRAM. When an address of an
+instruction is written into the IR, the address information is sent from the IR to the AC. Selection of either
+DDRAM or CGRAM is also determined concurrently by the instruction.
+
+After writing into (reading from) DDRAM or CGRAM, the AC is automatically incremented by 1
+(decremented by 1). The AC contents are then output to DB0 to DB6 when RS = 0 and R/W = 1 (Table 1).
+
+Table 1         Register Selection
+
+RS          R/W           Operation
+0           0             IR write as an internal operation (display clear, etc.)
+0           1             Read busy flag (DB7) and address counter (DB0 to DB6)
+1           0             DR write as an internal operation (DR to DDRAM or CGRAM)
+1           1             DR read as an internal operation (DDRAM or CGRAM to DR)
+
+
+
+
+                                                                                                            9
+HD44780U
+
+Display Data RAM (DDRAM)
+
+Display data RAM (DDRAM) stores display data represented in 8-bit character codes. Its extended
+capacity is 80 × 8 bits, or 80 characters. The area in display data RAM (DDRAM) that is not used for
+display can be used as general data RAM. See Figure 1 for the relationships between DDRAM addresses
+and positions on the liquid crystal display.
+
+The DDRAM address (ADD ) is set in the address counter (AC) as hexadecimal.
+
+• 1-line display (N = 0) (Figure 2)
+   When there are fewer than 80 display characters, the display begins at the head position. For
+      example, if using only the HD44780, 8 characters are displayed. See Figure 3.
+      When the display shift operation is performed, the DDRAM address shifts. See Figure 3.
+
+
+                         High order          Low order
+                            bits               bits                    Example: DDRAM address 4E
+        AC
+        (hexadecimal) AC6 AC5 AC4 AC3 AC2 AC1 AC0                          1       0   0   1    1    1   0
+
+
+                                       Figure 1 DDRAM Address
+
+
+                Display position
+                (digit)          1    2      3       4   5                                 79   80
+                DDRAM                                            ..................
+                              00 01          02      03 04                                 4E 4F
+                address
+                (hexadecimal)
+
+                                          Figure 2 1-Line Display
+
+
+                                Display
+                                position         1   2   3   4     5   6       7   8
+
+                                DDRAM         00 01 02 03 04 05 06 07
+                                address
+
+                                For
+                                shift left    01 02 03 04 05 06 07 08
+
+                                For
+                                shift right 4F 00 01 02 03 04 05 06
+
+                          Figure 3 1-Line by 8-Character Display Example
+
+
+
+
+10
+                                                                                            HD44780U
+• 2-line display (N = 1) (Figure 4)
+   Case 1: When the number of display characters is less than 40 × 2 lines, the two lines are displayed
+      from the head. Note that the first line end address and the second line start address are not
+      consecutive. For example, when just the HD44780 is used, 8 characters × 2 lines are displayed. See
+      Figure 5.
+      When display shift operation is performed, the DDRAM address shifts. See Figure 5.
+
+
+                Display
+                position        1     2      3       4   5                        39   40
+
+                              00 01          02      03 04   ..................   26 27
+                DDRAM
+                address                                      ..................
+                (hexadecimal) 40 41          42      43 44                        66 67
+
+
+                                          Figure 4 2-Line Display
+
+
+                                Display
+                                position         1   2   3   4   5   6   7   8
+
+                                DDRAM         00 01 02 03 04 05 06 07
+                                address
+                                              40 41 42 43 44 45 46 47
+
+
+
+                                For           01 02 03 04 05 06 07 08
+                                shift left
+                                              41 42 43 44 45 46 47 48
+
+
+                                For         27 00 01 02 03 04 05 06
+                                shift right
+                                            67 40 41 42 43 44 45 46
+
+
+                           Figure 5 2-Line by 8-Character Display Example
+
+
+
+
+                                                                                                      11
+HD44780U
+      Case 2: For a 16-character × 2-line display, the HD44780 can be extended using one 40-output
+       extension driver. See Figure 6.
+       When display shift operation is performed, the DDRAM address shifts. See Figure 6.
+
+
+                           Display
+                           position    1   2   3   4   5   6   7   8   9 10 11 12 13 14 15 16
+
+                           DDRAM       00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+                           address
+                                       40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F
+
+
+
+                                       HD44780U display                  Extension driver
+                                                                             display
+
+                                       01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10
+                          For
+                          shift left
+                                       41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F 50
+
+
+                          For         27 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E
+                          shift right
+                                       67 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E
+
+
+                          Figure 6 2-Line by 16-Character Display Example
+
+
+
+
+12
+                                                                                              HD44780U
+
+Character Generator ROM (CGROM)
+
+The character generator ROM generates 5 × 8 dot or 5 × 10 dot character patterns from 8-bit character
+codes (Table 4). It can generate 208 5 × 8 dot character patterns and 32 5 × 10 dot character patterns. User-
+defined character patterns are also available by mask-programmed ROM.
+
+
+Character Generator RAM (CGRAM)
+
+In the character generator RAM, the user can rewrite character patterns by program. For 5 × 8 dots, eight
+character patterns can be written, and for 5 × 10 dots, four character patterns can be written.
+
+Write into DDRAM the character codes at the addresses shown as the left column of Table 4 to show the
+character patterns stored in CGRAM.
+
+See Table 5 for the relationship between CGRAM addresses and data and display patterns.
+
+Areas that are not used for display can be used as general data RAM.
+
+
+Modifying Character Patterns
+
+• Character pattern development procedure
+
+The following operations correspond to the numbers listed in Figure 7:
+
+1. Determine the correspondence between character codes and character patterns.
+2. Create a listing indicating the correspondence between EPROM addresses and data.
+3. Program the character patterns into the EPROM.
+4. Send the EPROM to Hitachi.
+5. Computer processing on the EPROM is performed at Hitachi to create a character pattern listing, which
+   is sent to the user.
+6. If there are no problems within the character pattern listing, a trial LSI is created at Hitachi and samples
+   are sent to the user for evaluation. When it is confirmed by the user that the character patterns are
+   correctly written, mass production of the LSI proceeds at Hitachi.
+
+
+
+
+                                                                                                             13
+HD44780U
+
+                             Hitachi                                  User
+
+                                                                      Start
+
+
+                           Computer                               Determine
+                                                                                           1
+                           processing                          character patterns
+
+                        Create character                        Create EPROM
+                                              5                                            2
+                         pattern listing                       address data listing
+
+
+                            Evaluate                             Write EPROM               3
+                            character
+                             patterns
+
+                                                               EPROM → Hitachi             4
+                  No
+                              OK?
+                                  Yes
+
+                            Art work
+
+
+
+                              M/T
+
+
+
+                            Masking
+
+
+
+                              Trial
+
+
+
+                            Sample
+
+
+                            Sample            6
+                           evaluation
+
+                                             No
+                              OK?
+                                 Yes
+                             Mass
+                           production
+
+
+     Note: For a description of the numbers used in this figure, refer to the preceding page.
+
+                    Figure 7 Character Pattern Development Procedure
+
+
+
+
+14
+                                                                                                HD44780U
+• Programming character patterns
+  This section explains the correspondence between addresses and data used to program character patterns
+  in EPROM. The HD44780U character generator ROM can generate 208 5 × 8 dot character patterns and
+  32 5 × 10 dot character patterns for a total of 240 different character patterns.
+   Character patterns
+      EPROM address data and character pattern data correspond with each other to form a 5 × 8 or 5 ×
+      10 dot character pattern (Tables 2 and 3).
+
+Table 2         Example of Correspondence between EPROM Address Data and Character Pattern
+                (5 × 8 Dots)
+
+                           EPROM Address                              Data
+
+                                                           LSB
+      A 1 1A 1 0 A9 A8 A7 A6 A5 A4 A3 A2 A1 A0 O 4 O3 O2 O1 O0
+
+                                           0   0   0      0   1   0   0      0   0
+                                           0   0   0   1      1   0   0      0   0
+                                           0   0   1      0   1   0   1      1   0
+                                           0   0   1   1      1   1   0      0   1
+                                           0   1   0   0      1   0   0      0   1
+                                           0   1   0   1      1   0   0      0   1
+                                           0   1   1   0      1   1   1      1   0
+          0    1   1   0   0   0   1   0   0   1   1   1      0   0   0      0   0         Cursor position
+                                           1   0   0   0      0   0   0      0   0
+                                           1   0   0   1      0   0   0      0   0
+                                           1   0   1   0      0   0   0      0   0
+                                           1   0   1   1      0   0   0      0   0
+                                           1   1   0   0      0   0   0      0   0
+                                           1   1   0   1      0   0   0      0   0
+                                           1   1   1   0      0   0   0      0   0
+                                           1   1   1   1      0   0   0      0   0
+                Character code                 Line
+                                               position
+Notes: 1.     EPROM addresses A11 to A4 correspond to a character code.
+       2.     EPROM addresses A3 to A0 specify a line position of the character pattern.
+       3.     EPROM data O4 to O0 correspond to character pattern data.
+       4.     EPROM data O5 to O7 must be specified as 0.
+       5.     A lit display position (black) corresponds to a 1.
+       6.     Line 9 and the following lines must be blanked with 0s for a 5 × 8 dot character fonts.
+
+
+
+
+                                                                                                             15
+HD44780U
+    Handling unused character patterns
+1. EPROM data outside the character pattern area: Always input 0s.
+2. EPROM data in CGRAM area: Always input 0s. (Input 0s to EPROM addresses 00H to FFH.)
+3. EPROM data used when the user does not use any HD44780U character pattern: According to the user
+   application, handled in one of the two ways listed as follows.
+   a. When unused character patterns are not programmed: If an unused character code is written into
+      DDRAM, all its dots are lit. By not programing a character pattern, all of its bits become lit. (This is
+      due to the EPROM being filled with 1s after it is erased.)
+   b. When unused character patterns are programmed as 0s: Nothing is displayed even if unused
+      character codes are written into DDRAM. (This is equivalent to a space.)
+
+Table 3         Example of Correspondence between EPROM Address Data and Character Pattern
+                (5 × 10 Dots)
+
+                           EPROM Address                              Data
+
+                                                             LSB
+        A 1 1A 1 0 A9 A8 A7 A6 A5 A4 A3 A2 A1 A0 O 4 O3 O2 O1 O0
+
+                                           0   0   0      0   0   0   0      0   0
+                                           0   0   0   1      0   0   0      0   0
+                                           0   0   1      0   0   1   1      0   1
+                                           0   0   1   1      1   0   0      1   1
+                                           0   1   0   0      1   0   0      0   1
+                                           0   1   0   1      1   0   0      0   1
+                                           0   1   1   0      0   1   1      1   1
+          0    1   0   1   0   0   1   0   0   1   1   1      0   0   0      0   1
+                                           1   0   0   0      0   0   0      0   1
+                                           1   0   0   1      0   0   0      0   1
+                                           1   0   1   0      0   0   0      0   0        Cursor position
+                                           1   0   1   1      0   0   0      0   0
+                                           1   1   0   0      0   0   0      0   0
+                                           1   1   0   1      0   0   0      0   0
+                                           1   1   1   0      0   0   0      0   0
+                                           1   1   1   1      0   0   0      0   0
+                 Character code                Line
+                                               position
+Notes: 1.     EPROM addresses A11 to A3 correspond to a character code.
+       2.     EPROM addresses A3 to A0 specify a line position of the character pattern.
+       3.     EPROM data O4 to O0 correspond to character pattern data.
+       4.     EPROM data O5 to O7 must be specified as 0.
+       5.     A lit display position (black) corresponds to a 1.
+       6.     Line 11 and the following lines must be blanked with 0s for a 5 × 10 dot character fonts.
+
+
+
+
+16
+                                                                                       HD44780U
+Table 4             Correspondence between Character Codes and Character Patterns (ROM Code: A00)
+
+         Upper 4
+Lower       Bits   0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010   1011 1100 1101 1110 1111
+4 Bits
+                    CG
+                   RAM
+xxxx0000            (1)
+
+
+
+
+xxxx0001           (2)
+
+
+xxxx0010           (3)
+
+
+xxxx0011           (4)
+
+
+xxxx0100           (5)
+
+
+xxxx0101           (6)
+
+
+xxxx0110           (7)
+
+
+xxxx0111           (8)
+
+
+xxxx1000           (1)
+
+
+xxxx1001           (2)
+
+
+xxxx1010           (3)
+
+
+xxxx1011           (4)
+
+
+xxxx1100           (5)
+
+
+xxxx1101           (6)
+
+
+xxxx1110           (7)
+
+
+xxxx1111           (8)
+
+
+Note: The user can specify any pattern for character-generator RAM.
+
+
+
+
+                                                                                                    17
+HD44780U
+Table 4             Correspondence between Character Codes and Character Patterns (ROM Code: A02)
+
+         Upper 4
+Lower       Bits   0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
+4 Bits
+                    CG
+                   RAM
+xxxx0000            (1)
+
+
+
+xxxx0001           (2)
+
+
+xxxx0010           (3)
+
+
+xxxx0011           (4)
+
+
+xxxx0100           (5)
+
+
+xxxx0101           (6)
+
+
+xxxx0110           (7)
+
+
+xxxx0111           (8)
+
+
+xxxx1000           (1)
+
+
+xxxx1001           (2)
+
+
+xxxx1010           (3)
+
+
+xxxx1011           (4)
+
+
+xxxx1100           (5)
+
+
+xxxx1101           (6)
+
+
+xxxx1110           (7)
+
+
+xxxx1111           (8)
+
+
+
+
+18
+                                                                                                HD44780U
+Table 5       Relationship between CGRAM Addresses, Character Codes (DDRAM) and Character
+              Patterns (CGRAM Data)
+
+   For 5 × 8 dot character patterns
+
+                Character Codes                                     Character Patterns
+                 (DDRAM data)             CGRAM Address               (CGRAM data)
+             7 6 5 4 3 2 1 0              5 4 3 2 1 0             7 6 5 4 3 2 1 0
+              High             Low         High         Low        High                 Low
+
+                                                    0   0   0     * * *     1   1   1   1   0
+                                                    0   0   1               1   0   0   0   1
+                                                    0   1   0               1   0   0   0   1
+                                                                                                Character
+                                                    0   1   1               1   1   1   1   0   pattern (1)
+             0 0 0 0 * 0 0 0              0 0 0
+                                                    1   0   0               1   0   1   0   0
+                                                    1   0   1               1   0   0   1   0
+                                                    1   1   0               1   0   0   0   1
+                                                    1   1   1     * * *     0   0   0   0   0   Cursor position
+                                                    0   0   0     * * *     1   0   0   0   1
+                                                    0   0   1               0   1   0   1   0
+                                                    0   1   0               1   1   1   1   1
+                                                                                                Character
+                                                    0   1   1               0   0   1   0   0
+             0 0 0 0 * 0 0 1              0 0 1                                                 pattern (2)
+                                                    1   0   0               1   1   1   1   1
+                                                    1   0   1               0   0   1   0   0
+                                                    1   1   0               0   0   1   0   0
+                                                    1   1   1     * * *     0   0   0   0   0   Cursor position
+                                                    0   0   0     * * *
+                                                    0   0   1
+
+
+             0 0 0 0 * 1 1 1              1 1 1
+                                                    1   0   0
+                                                    1   0   1
+                                                    1   1   0
+                                                    1   1   1     * * *
+
+Notes: 1. Character code bits 0 to 2 correspond to CGRAM address bits 3 to 5 (3 bits: 8 types).
+       2. CGRAM address bits 0 to 2 designate the character pattern line position. The 8th line is the
+           cursor position and its display is formed by a logical OR with the cursor.
+          Maintain the 8th line data, corresponding to the cursor display position, at 0 as the cursor display.
+          If the 8th line data is 1, 1 bits will light up the 8th line regardless of the cursor presence.
+       3. Character pattern row positions correspond to CGRAM data bits 0 to 4 (bit 4 being at the left).
+       4. As shown Table 5, CGRAM character patterns are selected when character code bits 4 to 7 are
+           all 0. However, since character code bit 3 has no effect, the R display example above can be
+           selected by either character code 00H or 08H.
+       5. 1 for CGRAM data corresponds to display selection and 0 to non-selection.
+       * Indicates no effect.
+
+
+
+
+                                                                                                                  19
+HD44780U
+Table 5      Relationship between CGRAM Addresses, Character Codes (DDRAM) and Character
+             Patterns (CGRAM Data) (cont)
+
+  For 5 × 10 dot character patterns
+
+                Character Codes                                      Character Patterns
+                 (DDRAM data)              CGRAM Address               (CGRAM data)
+             7 6 5 4 3 2 1 0               5 4 3 2 1 0             7 6 5 4 3 2 1 0
+              High             Low          High           Low      High                 Low
+
+                                                   0   0   0   0   * * *     0   0   0   0   0
+                                                   0   0   0   1             0   0   0   0   0
+                                                   0   0   1   0             1   0   1   1   0
+                                                   0   0   1   1             1   1   0   0   1
+                                                   0   1   0   0             1   0   0   0   1   Character
+             0 0 0 0 * 0 0 *               0 0     0   1   0   1             1   0   0   0   1   pattern
+                                                   0   1   1   0             1   1   1   1   0
+                                                   0   1   1   1             1   0   0   0   0
+                                                   1   0   0   0             1   0   0   0   0
+                                                   1   0   0   1             1   0   0   0   0
+                                                   1   0   1   0   * * *     0   0   0   0   0   Cursor position
+                                                   1   0   1   1   * * *     *   *   *   *   *
+                                                   1   1   0   0
+                                                   1   1   0   1
+                                                   1   1   1   0
+                                                   1   1   1   1   * * *     * * * * *
+                                                   0   0   0   0   * * *
+                                                   0   0   0   1
+
+             0 0 0 0 * 1 1 *               1 1     1   0   0   1
+                                                   1   0   1   0   * * *
+                                                   1   0   1   1   * * *     * * * * *
+                                                   1   1   0   0
+                                                   1   1   0   1
+                                                   1   1   1   0
+                                                   1   1   1   1   * * *     * * * * *
+Notes: 1. Character code bits 1 and 2 correspond to CGRAM address bits 4 and 5 (2 bits: 4 types).
+       2. CGRAM address bits 0 to 3 designate the character pattern line position. The 11th line is the
+           cursor position and its display is formed by a logical OR with the cursor.
+          Maintain the 11th line data corresponding to the cursor display positon at 0 as the cursor display.
+          If the 11th line data is “1”, “1” bits will light up the 11th line regardless of the cursor presence.
+          Since lines 12 to 16 are not used for display, they can be used for general data RAM.
+       3. Character pattern row positions are the same as 5 × 8 dot character pattern positions.
+       4. CGRAM character patterns are selected when character code bits 4 to 7 are all 0.
+          However, since character code bits 0 and 3 have no effect, the P display example above can be
+           selected by character codes 00H, 01H, 08H, and 09H.
+       5. 1 for CGRAM data corresponds to display selection and 0 to non-selection.
+       * Indicates no effect.
+
+
+
+
+20
+                                                                                                                       HD44780U
+
+Timing Generation Circuit
+
+The timing generation circuit generates timing signals for the operation of internal circuits such as
+DDRAM, CGROM and CGRAM. RAM read timing for display and internal operation timing by MPU
+access are generated separately to avoid interfering with each other. Therefore, when writing data to
+DDRAM, for example, there will be no undesirable interferences, such as flickering, in areas other than the
+display area.
+
+
+Liquid Crystal Display Driver Circuit
+
+The liquid crystal display driver circuit consists of 16 common signal drivers and 40 segment signal
+drivers. When the character font and number of lines are selected by a program, the required common
+signal drivers automatically output drive waveforms, while the other common signal drivers continue to
+output non-selection waveforms.
+
+Sending serial data always starts at the display data character pattern corresponding to the last address of
+the display data RAM (DDRAM).
+
+Since serial data is latched when the display data character pattern corresponding to the starting address
+enters the internal shift register, the HD44780U drives from the head display.
+
+
+Cursor/Blink Control Circuit
+
+The cursor/blink control circuit generates the cursor or character blinking. The cursor or the blinking will
+appear with the digit located at the display data RAM (DDRAM) address set in the address counter (AC).
+
+For example (Figure 8), when the address counter is 08H, the cursor position is displayed at DDRAM
+address 08H.
+
+                                                   AC6 AC5 AC4 AC3 AC2 AC1 AC0
+
+                                              AC    0     0     0    1     0     0     0
+
+                    For a 1-line display
+                           Display position         1     2     3    4     5     6     7      8     9     10   11
+                           DDRAM address
+                           (hexadecimal)           00    01    02    03    04   05    06     07    08     09   0A
+
+
+
+                    For a 2-line display                                                   cursor position
+
+                           Display position         1     2     3    4     5     6     7      8     9     10   11
+
+                                                   00    01    02    03    04   05    06     07    08     09   0A
+                           DDRAM address
+                           (hexadecimal)
+                                                   40    41    42    43    44   45    46     47    48     49   4A
+
+
+                                                                                        cursor position
+               Note: The cursor or blinking appears when the address counter (AC) selects the character
+                     generator RAM (CGRAM). However, the cursor and blinking become meaningless.
+                     The cursor or blinking is displayed in the meaningless position when the AC is a CGRAM address.
+
+
+                                     Figure 8 Cursor/Blink Display Example
+
+
+
+
+                                                                                                                             21
+HD44780U
+
+Interfacing to the MPU
+
+The HD44780U can send data in either two 4-bit operations or one 8-bit operation, thus allowing
+interfacing with 4- or 8-bit MPUs.
+
+• For 4-bit interface data, only four bus lines (DB4 to DB7) are used for transfer. Bus lines DB0 to DB3
+  are disabled. The data transfer between the HD44780U and the MPU is completed after the 4-bit data
+  has been transferred twice. As for the order of data transfer, the four high order bits (for 8-bit operation,
+  DB4 to DB7) are transferred before the four low order bits (for 8-bit operation, DB0 to DB3).
+  The busy flag must be checked (one instruction) after the 4-bit data has been transferred twice. Two
+  more 4-bit operations then transfer the busy flag and address counter data.
+• For 8-bit interface data, all eight bus lines (DB0 to DB7) are used.
+
+
+          RS
+
+          R/W
+
+          E
+
+
+
+
+          DB7                IR7         IR3        BF             AC3          DR7        DR3
+
+          DB6                IR6         IR2       AC6             AC2          DR6        DR2
+
+          DB5                IR5         IR1       AC5             AC1          DR5        DR1
+
+          DB4                IR4         IR0       AC4             AC0          DR4        DR0
+
+                       Instruction register (IR)   Busy flag (BF) and          Data register (DR)
+                       write                       address counter (AC)        read
+                                                   read
+
+                                       Figure 9 4-Bit Transfer Example
+
+
+
+
+22
+                                                                                             HD44780U
+
+Reset Function
+
+Initializing by Internal Reset Circuit
+
+An internal reset circuit automatically initializes the HD44780U when the power is turned on. The
+following instructions are executed during the initialization. The busy flag (BF) is kept in the busy state
+until the initialization ends (BF = 1). The busy state lasts for 10 ms after VCC rises to 4.5 V.
+
+1. Display clear
+2. Function set:
+   DL = 1; 8-bit interface data
+   N = 0; 1-line display
+   F = 0; 5 × 8 dot character font
+3. Display on/off control:
+   D = 0; Display off
+   C = 0; Cursor off
+   B = 0; Blinking off
+4. Entry mode set:
+   I/D = 1; Increment by 1
+   S = 0; No shift
+
+Note: If the electrical characteristics conditions listed under the table Power Supply Conditions Using
+      Internal Reset Circuit are not met, the internal reset circuit will not operate normally and will fail to
+      initialize the HD44780U. For such a case, initial-ization must be performed by the MPU as
+      explained in the section, Initializing by Instruction.
+
+
+Instructions
+
+Outline
+
+Only the instruction register (IR) and the data register (DR) of the HD44780U can be controlled by the
+MPU. Before starting the internal operation of the HD44780U, control information is temporarily stored
+into these registers to allow interfacing with various MPUs, which operate at different speeds, or various
+peripheral control devices. The internal operation of the HD44780U is determined by signals sent from the
+MPU. These signals, which include register selection signal (RS), read/
+
+write signal (R/W), and the data bus (DB0 to DB7), make up the HD44780U instructions (Table 6). There
+are four categories of instructions that:
+
+•   Designate HD44780U functions, such as display format, data length, etc.
+•   Set internal RAM addresses
+•   Perform data transfer with internal RAM
+•   Perform miscellaneous functions
+
+
+
+
+                                                                                                            23
+HD44780U
+Normally, instructions that perform data transfer with internal RAM are used the most. However, auto-
+incrementation by 1 (or auto-decrementation by 1) of internal HD44780U RAM addresses after each data
+write can lighten the program load of the MPU. Since the display shift instruction (Table 11) can perform
+concurrently with display data write, the user can minimize system development time with maximum
+programming efficiency.
+
+When an instruction is being executed for internal operation, no instruction other than the busy flag/address
+read instruction can be executed.
+
+Because the busy flag is set to 1 while an instruction is being executed, check it to make sure it is 0 before
+sending another instruction from the MPU.
+
+Note: Be sure the HD44780U is not in the busy state (BF = 0) before sending an instruction from the
+      MPU to the HD44780U. If an instruction is sent without checking the busy flag, the time between
+      the first instruction and next instruction will take much longer than the instruction time itself. Refer
+      to Table 6 for the list of each instruc-tion execution time.
+
+Table 6         Instructions
+
+                                                                                                    Execution Time
+                                        Code                                                        (max) (when f cp or
+Instruction RS    R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 Description                                   f OSC is 270 kHz)
+Clear       0     0    0       0    0     0    0    0    0     1    Clears entire display and
+display                                                             sets DDRAM address 0 in
+                                                                    address counter.
+Return      0     0    0       0    0     0    0    0    1     —    Sets DDRAM address 0 in         1.52 ms
+home                                                                address counter. Also
+                                                                    returns display from being
+                                                                    shifted to original position.
+                                                                    DDRAM contents remain
+                                                                    unchanged.
+Entry       0     0    0       0    0     0    0    1    I/D   S    Sets cursor move direction      37 µs
+mode set                                                            and specifies display shift.
+                                                                    These operations are
+                                                                    performed during data write
+                                                                    and read.
+Display     0     0    0       0    0     0    1    D    C     B    Sets entire display (D) on/off, 37 µs
+on/off                                                              cursor on/off (C), and
+control                                                             blinking of cursor position
+                                                                    character (B).
+Cursor or   0     0    0       0    0     1    S/C R/L   —     —    Moves cursor and shifts         37 µs
+display                                                             display without changing
+shift                                                               DDRAM contents.
+Function    0     0    0       0    1     DL   N    F    —     —    Sets interface data length    37 µs
+set                                                                 (DL), number of display lines
+                                                                    (N), and character font (F).
+Set         0     0    0       1    ACG ACG ACG ACG ACG ACG Sets CGRAM address.                     37 µs
+CGRAM                                                       CGRAM data is sent and
+address                                                     received after this setting.
+Set         0     0    1       ADD ADD ADD ADD ADD ADD ADD Sets DDRAM address.                      37 µs
+DDRAM                                                      DDRAM data is sent and
+address                                                    received after this setting.
+Read busy 0       1    BF      AC   AC    AC   AC   AC   AC    AC   Reads busy flag (BF)            0 µs
+flag &                                                              indicating internal operation
+address                                                             is being performed and
+                                                                    reads address counter
+                                                                    contents.
+
+
+
+
+24
+                                                                                                 HD44780U
+Table 6          Instructions (cont)
+
+                                                                                                Execution Time
+                                       Code                                                     (max) (when f cp or
+Instruction RS     R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 Description                              f OSC is 270 kHz)
+Write data   1     0    Write data                               Writes data into DDRAM or      37 µs
+to CG or                                                         CGRAM.                         tADD = 4 µs*
+DDRAM
+Read data 1        1    Read data                                Reads data from DDRAM or       37 µs
+from CG or                                                       CGRAM.                         tADD = 4 µs*
+DDRAM
+             I/D = 1:   Increment                                DDRAM: Display data RAM        Execution time
+             I/D = 0:   Decrement                                CGRAM: Character generator     changes when
+             S   = 1:   Accompanies display shift                         RAM                   frequency changes
+             S/C = 1:   Display shift                            ACG:     CGRAM address         Example:
+             S/C = 0:   Cursor move                              ADD:     DDRAM address         When fcp or fOSC is
+             R/L = 1:   Shift to the right                           (corresponds to cursor     250 kHz,
+             R/L = 0:   Shift to the left                            address)                           270
+                                                                                                37 µs ×      = 40 µs
+             DL = 1:    8 bits, DL = 0: 4 bits                   AC: Address counter used for           250
+             N   = 1:   2 lines, N = 0: 1 line                       both DD and CGRAM
+             F   = 1:   5 × 10 dots, F = 0: 5 × 8 dots               addresses
+             BF = 1:    Internally operating
+             BF = 0:    Instructions acceptable
+Note:     — indicates no effect.
+          * After execution of the CGRAM/DDRAM data write or read instruction, the RAM address counter
+            is incremented or decremented by 1. The RAM address counter is updated after the busy flag
+            turns off. In Figure 10, tADD is the time elapsed after the busy flag turns off until the address
+            counter is updated.
+
+
+
+
+             Busy signal                      Busy state
+             (DB7 pin)
+
+
+             Address counter
+             (DB0 to DB6 pins)                             A                         A+1
+
+                                                               t ADD
+
+             Note: t ADD depends on the operation frequency
+                   t ADD = 1.5/(f cp or f OSC ) seconds
+
+                                       Figure 10 Address Counter Update
+
+
+
+
+                                                                                                                25
+HD44780U
+
+Instruction Description
+
+Clear Display
+
+Clear display writes space code 20H (character pattern for character code 20H must be a blank pattern) into
+all DDRAM addresses. It then sets DDRAM address 0 into the address counter, and returns the display to
+its original status if it was shifted. In other words, the display disappears and the cursor or blinking goes to
+the left edge of the display (in the first line if 2 lines are displayed). It also sets I/D to 1 (increment mode)
+in entry mode. S of entry mode does not change.
+
+
+Return Home
+
+Return home sets DDRAM address 0 into the address counter, and returns the display to its original status
+if it was shifted. The DDRAM contents do not change.
+
+The cursor or blinking go to the left edge of the display (in the first line if 2 lines are displayed).
+
+
+Entry Mode Set
+
+I/D: Increments (I/D = 1) or decrements (I/D = 0) the DDRAM address by 1 when a character code is
+written into or read from DDRAM.
+
+The cursor or blinking moves to the right when incremented by 1 and to the left when decremented by 1.
+The same applies to writing and reading of CGRAM.
+
+S: Shifts the entire display either to the right (I/D = 0) or to the left (I/D = 1) when S is 1. The display does
+not shift if S is 0.
+
+If S is 1, it will seem as if the cursor does not move but the display does. The display does not shift when
+reading from DDRAM. Also, writing into or reading out from CGRAM does not shift the display.
+
+
+Display On/Off Control
+
+D: The display is on when D is 1 and off when D is 0. When off, the display data remains in DDRAM, but
+can be displayed instantly by setting D to 1.
+
+C: The cursor is displayed when C is 1 and not displayed when C is 0. Even if the cursor disappears, the
+function of I/D or other specifications will not change during display data write. The cursor is displayed
+using 5 dots in the 8th line for 5 × 8 dot character font selection and in the 11th line for the 5 × 10 dot
+character font selection (Figure 13).
+
+B: The character indicated by the cursor blinks when B is 1 (Figure 13). The blinking is displayed as
+switching between all blank dots and displayed characters at a speed of 409.6-ms intervals when fcp or f OSC
+is 250 kHz. The cursor and blinking can be set to display simultaneously. (The blinking frequency changes
+according to f OSC or the reciprocal of f cp . For example, when fcp is 270 kHz, 409.6 × 250/270 = 379.2 ms.)
+
+
+
+
+26
+                                                                                             HD44780U
+
+Cursor or Display Shift
+
+Cursor or display shift shifts the cursor position or display to the right or left without writing or reading
+display data (Table 7). This function is used to correct or search the display. In a 2-line display, the cursor
+moves to the second line when it passes the 40th digit of the first line. Note that the first and second line
+displays will shift at the same time.
+
+When the displayed data is shifted repeatedly each line moves only horizontally. The second line display
+does not shift into the first line position.
+
+The address counter (AC) contents will not change if the only action performed is a display shift.
+
+
+Function Set
+
+DL: Sets the interface data length. Data is sent or received in 8-bit lengths (DB7 to DB0) when DL is 1,
+and in 4-bit lengths (DB7 to DB4) when DL is 0.When 4-bit length is selected, data must be sent or
+received twice.
+
+N: Sets the number of display lines.
+
+F: Sets the character font.
+
+Note: Perform the function at the head of the program before executing any instructions (except for the
+      read busy flag and address instruction). From this point, the function set instruction cannot be
+      executed unless the interface data length is changed.
+
+
+Set CGRAM Address
+
+Set CGRAM address sets the CGRAM address binary AAAAAA into the address counter.
+
+Data is then written to or read from the MPU for CGRAM.
+
+
+
+
+                                                                                                            27
+HD44780U
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Clear
+                      Code   0     0    0    0    0    0     0     0      0    1
+     display
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Return                  0     0    0    0    0    0     0     0      1    *   Note: * Don’t care.
+                      Code
+     home
+
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Entry
+                      Code   0     0    0    0    0    0     0     1     I/D   S
+     mode set
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Display
+                      Code   0     0    0    0    0    0     1     D      C    B
+     on/off control
+
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Cursor or
+                      Code   0     0    0    0    0    1    S/C    R/L    *    *   Note: * Don’t care.
+     display shift
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Function set     Code   0     0    0    0    1   DL     N      F     *    *
+
+
+                             RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+     Set CGRAM               0     0    0    1    A    A     A      A     A    A
+                      Code
+     address
+                                                      Higher         Lower
+                                                      order bit    order bit
+
+                                       Figure 11 Instruction (1)
+
+
+
+
+28
+                                                                                                            HD44780U
+
+Set DDRAM Address
+
+Set DDRAM address sets the DDRAM address binary AAAAAAA into the address counter.
+
+Data is then written to or read from the MPU for DDRAM.
+
+However, when N is 0 (1-line display), AAAAAAA can be 00H to 4FH. When N is 1 (2-line display),
+AAAAAAA can be 00H to 27H for the first line, and 40H to 67H for the second line.
+
+
+Read Busy Flag and Address
+
+Read busy flag and address reads the busy flag (BF) indicating that the system is now internally operating
+on a previously received instruction. If BF is 1, the internal operation is in progress. The next instruction
+will not be accepted until BF is reset to 0. Check the BF status before the next write operation. At the same
+time, the value of the address counter in binary AAAAAAA is read out. This address counter is used by
+both CG and DDRAM addresses, and its value is determined by the previous instruction. The address
+contents are the same as for instructions set CGRAM address and set DDRAM address.
+
+Table 7                 Shift Function
+
+S/C             R/L
+0               0           Shifts the cursor position to the left. (AC is decremented by one.)
+0               1           Shifts the cursor position to the right. (AC is incremented by one.)
+1               0           Shifts the entire display to the left. The cursor follows the display shift.
+1               1           Shifts the entire display to the right. The cursor follows the display shift.
+
+
+
+Table 8                 Function Set
+
+                    No. of
+                    Display                          Duty
+N       F           Lines      Character Font        Factor     Remarks
+0       0           1          5 × 8 dots            1/8
+0       1           1          5 × 10 dots           1/11
+1       *           2          5 × 8 dots            1/16       Cannot display two lines for 5 × 10 dot character font
+Note:       *       Indicates don’t care.
+
+
+
+
+                                                                                                                         29
+HD44780U
+
+
+
+
+                  Cursor
+
+     5 × 8 dot               5 × 10 dot                             Alternating display
+     character font          character font
+            Cursor display example                              Blink display example
+
+                              Figure 12 Cursor and Blinking
+
+
+                                     RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+        Set DDRAM          Code      0     0   1    A    A     A       A    A      A      A
+        address
+                                                        Higher                Lower
+                                                        order bit           order bit
+
+
+
+                                     RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+        Read busy flag     Code      0     1   BF   A    A     A       A    A      A      A
+        and address
+                                                        Higher                Lower
+                                                        order bit           order bit
+
+                                  Figure 13 Instruction (2)
+
+
+
+
+30
+                                                                                             HD44780U
+
+Write Data to CG or DDRAM
+
+Write data to CG or DDRAM writes 8-bit binary data DDDDDDDD to CG or DDRAM.
+
+To write into CG or DDRAM is determined by the previous specification of the CGRAM or DDRAM
+address setting. After a write, the address is automatically incremented or decremented by 1 according to
+the entry mode. The entry mode also determines the display shift.
+
+
+Read Data from CG or DDRAM
+
+Read data from CG or DDRAM reads 8-bit binary data DDDDDDDD from CG or DDRAM.
+
+The previous designation determines whether CG or DDRAM is to be read. Before entering this read
+instruction, either CGRAM or DDRAM address set instruction must be executed. If not executed, the first
+read data will be invalid. When serially executing read instructions, the next address data is normally read
+from the second read. The address set instructions need not be executed just before this read instruction
+when shifting the cursor by the cursor shift instruction (when reading out DDRAM). The operation of the
+cursor shift instruction is the same as the set DDRAM address instruction.
+
+After a read, the entry mode automatically increases or decreases the address by 1. However, display shift
+is not executed regardless of the entry mode.
+
+Note: The address counter (AC) is automatically incremented or decremented by 1 after the write
+      instructions to CGRAM or DDRAM are executed. The RAM data selected by the AC cannot be
+      read out at this time even if read instructions are executed. Therefore, to correctly read data,
+      execute either the address set instruction or cursor shift instruction (only with DDRAM), then just
+      before reading the desired data, execute the read instruction from the second time the read
+      instruction is sent.
+
+
+                                          RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+            Write data to       Code      1     0    D     D       D   D   D    D    D       D
+            CG or DDRAM
+                                                      Higher                       Lower
+                                                      order bits                order bits
+
+                                          RS   R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
+
+            Read data from      Code      1     1    D     D       D   D   D    D    D       D
+            CG or DDRAM
+                                                      Higher                       Lower
+                                                      order bits                order bits
+
+                                        Figure 14 Instruction (3)
+
+
+
+
+                                                                                                         31
+  HD44780U
+
+  Interfacing the HD44780U
+
+  Interface to MPUs
+
+  • Interfacing to an 8-bit MPU
+    See Figure 16 for an example of using a I/O port (for a single-chip microcomputer) as an interface
+    device.
+
+
+  +
+  
+  &
+  %
+  
+  
+  
+  
+  
+  
+  
+  , 
+    In this example, P30 to P37 are connected to the data bus DB0 to DB7, and P75 to P77 are connected to
+    E, R/W, and RS, respectively.
+
+
+
+
+0)#*  RS
+
+       R/W
+
+
+       E
+
+       Internal
+       operation
+
+       DB7                  Data
+
+                       Instruction
+                       write
+                                            Functioning
+
+
+                                           Busy
+
+                                         Busy flag
+                                         check
+                                                            Busy
+
+                                                          Busy flag
+                                                          check
+                                                                                 Not
+                                                                                 busy
+
+                                                                           Busy flag
+                                                                           check
+                                                                                               Data
+
+                                                                                             Instruction
+                                                                                             write
+
+
+                         Figure 15 Example of Busy Flag Check Timing Sequence
+
+
+                   H8/325                                             HD44780U
+
+
+                                             8                             COM1 to      16
+                     P30 to P37                               DB0 to DB7
+                                                                            COM16
+
+                                                                                                      LCD
+                            P77                               E
+                                                                           SEG1 to      40
+                            P76                               RS
+                            P75                               R/W           SEG40
+
+
+
+
+                               Figure 16 H8/325 Interface (Single-Chip Mode)
+
+
+
+
+  32
+                                                                                                 HD44780U
+   • Interfacing to a 4-bit MPU
+     The HD44780U can be connected to the I/O port of a 4-bit MPU. If the I/O port has enough bits, 8-bit
+     data can be transferred. Otherwise, one data transfer must be made in two operations for 4-bit data. In
+     this case, the timing sequence becomes somewhat complex. (See Figure 17.)
+     See Figure 18 for an interface example to the HMCS4019R.
+     Note that two cycles are needed for the busy flag check as well as for the data transfer. The 4-bit
+     operation is selected by the program.
+
+
+      RS
+
+      R/W
+
+      E
+        
+        
+        
+        
+        
+        
+        
+        *
+        $
+        #
+        
+        
+      Internal
+      operation
+
+      DB7
+
+
+
+
+!"()'./                   IR7
+
+
+                             write
+
+
+
+
+                       HMCS4019R
+                                  IR3
+
+                             Instruction
+
+
+
+
+                                    D15
+                                    D14
+                                    D13
+                                             Functioning
+
+
+                                               Busy AC3
+
+                                               Busy flag
+                                               check
+
+      Note: IR7 , IR3 are the 7th and 3rd bits of the instruction.
+            AC3 is the 3rd bit of the address counter.
+                                                                      Not
+                                                                     busy AC3
+
+                                                                     Busy flag
+                                                                     check
+
+
+
+
+                        Figure 17 Example of 4-Bit Data Transfer Timing Sequence
+
+
+
+
+                                                 4
+                                                           RS
+                                                           R/W
+                                                           E
+                                                                 HD44780
+
+
+
+                                                                        COM1 to
+                                                                         COM16
+                                                                                  16
+
+
+
+
+                                                                                  40
+                                                                                        D7
+
+
+                                                                                       write
+                                                                                               D3
+
+                                                                                       Instruction
+
+
+
+
+                                                                                             LCD
+
+                                                                        SEG1 to
+                             R10 to R13                    DB4 to DB7
+                                                                         SEG40
+
+
+
+
+                              Figure 18 Example of Interface to HMCS4019R
+
+
+
+
+                                                                                                           33
+HD44780U
+
+Interface to Liquid Crystal Display
+
+Character Font and Number of Lines: The HD44780U can perform two types of displays, 5 × 8 dot and
+5 × 10 dot character fonts, each with a cursor.
+
+Up to two lines are displayed for 5 × 8 dots and one line for 5 × 10 dots. Therefore, a total of three
+
+types of common signals are available (Table 9).
+
+The number of lines and font types can be selected by the program. (See Table 6, Instructions.)
+
+Connection to HD44780 and Liquid Crystal Display: See Figure 19 for the connection examples.
+
+Table 9       Common Signals
+
+Number of Lines           Character Font                   Number of Common Signals                    Duty Factor
+1                         5 × 8 dots + cursor              8                                           1/8
+1                         5 × 10 dots + cursor             11                                          1/11
+2                         5 × 8 dots + cursor              16                                          1/16
+
+
+
+
+                     HD44780
+
+                          COM1
+
+
+                          COM8
+
+                          SEG1
+
+
+                         SEG40
+
+
+                            Example of a 5 × 8 dot, 8-character × 1-line display (1/4 bias, 1/8 duty cycle)
+
+                     HD44780
+
+                          COM1
+
+
+
+
+                         COM11
+
+
+                          SEG1
+
+
+
+
+                         SEG40
+
+                            Example of a 5 × 10 dot, 8-character × 1-line display (1/4 bias, 1/11 duty cycle)
+
+
+                      Figure 19 Liquid Crystal Display and HD44780 Connections
+
+
+
+
+34
+                                                                                                      HD44780U
+Since five segment signal lines can display one digit, one HD44780U can display up to 8 digits for a 1-line
+display and 16 digits for a 2-line display.
+
+The examples in Figure 19 have unused common signal pins, which always output non-selection
+waveforms. When the liquid crystal display panel has unused extra scanning lines, connect the extra
+scanning lines to these common signal pins to avoid any undesirable effects due to crosstalk during the
+floating state.
+
+
+                HD44780
+
+                      COM1
+
+
+                      COM8
+                      COM9
+
+
+                    COM16
+
+
+                      SEG1
+
+
+
+
+                     SEG40
+
+                        Example of a 5 × 8 dot, 8-character × 2-line display (1/5 bias, 1/16 duty cycle)
+
+
+                 Figure 19 Liquid Crystal Display and HD44780 Connections (cont)
+
+
+
+
+                                                                                                            35
+HD44780U
+Connection of Changed Matrix Layout: In the preceding examples, the number of lines correspond to the
+scanning lines. However, the following display examples (Figure 20) are made possible by altering the
+matrix layout of the liquid crystal display panel. In either case, the only change is the layout. The display
+characteristics and the number of liquid crystal display characters depend on the number of common
+signals or on duty factor. Note that the display data RAM (DDRAM) addresses for 4 characters × 2 lines
+and for 16 characters × 1 line are the same as in Figure 19.
+
+
+            HD44780
+
+                 COM1
+
+
+
+                 COM8
+
+
+                  SEG1
+
+
+                 SEG40
+                 COM9
+
+
+
+                COM16
+
+
+                                   5 × 8 dot, 16-character × 1-line display
+                                   (1/5 bias, 1/16 duty cycle)
+
+                              Figure 20 Changed Matrix Layout Displays
+
+
+
+
+36
+                                                                                            HD44780U
+
+Power Supply for Liquid Crystal Display Drive
+
+Various voltage levels must be applied to pins V1 to V5 of the HD44780U to obtain the liquid crystal
+display drive waveforms. The voltages must be changed according to the duty factor (Table 10).
+
+VLCD is the peak value for the liquid crystal display drive waveforms, and resistance dividing provides
+voltages V1 to V5 (Figure 21).
+
+Table 10      Duty Factor and Power Supply for Liquid Crystal Display Drive
+
+                                                                 Duty Factor
+                                      1/8, 1/11                       1/16
+                                                                      Bias
+Power Supply                          1/4                             1/5
+V1                                    VCC–1/4 VLCD                    VCC–1/5 VLCD
+V2                                    VCC–1/2 VLCD                    VCC–2/5 VLCD
+V3                                    VCC–1/2 VLCD                    VCC–3/5 VLCD
+V4                                    VCC–3/4 VLCD                    VCC–4/5 VLCD
+V5                                    VCC–VLCD                        VCC–VLCD
+
+
+
+
+                                      VCC (+5 V)                               VCC (+5 V)
+
+                          VCC                                         VCC
+                                            R                                        R
+                           V1                                           V1
+                                                                                     R
+                           V2               R                           V2
+                                                   VLCD                              R      VLCD
+                           V3               R                           V3
+                           V4                                                        R
+                                                                        V4
+                                            R                                        R
+                           V5                                           V5
+
+                                            VR                                       VR
+
+                                        –5 V                                     –5 V
+           1/4 bias                                       1/5 bias
+           (1/8, 1/11 duty cycle)                         (1/16, duty cycle)
+
+
+                                    Figure 21 Drive Voltage Supply Example
+
+
+
+
+                                                                                                    37
+HD44780U
+
+Relationship between Oscillation Frequency and Liquid Crystal Display Frame
+Frequency
+
+The liquid crystal display frame frequencies of Figure 22 apply only when the oscillation frequency is 270
+kHz (one clock pulse of 3.7 µs).
+
+
+             1/8 duty cycle
+                                            400 clocks
+
+             COM1
+                                1       2       3        4              8    1    2
+                VCC
+                V1
+                V2 (V3)
+                V4
+                V5
+                                                     1 frame
+
+                1 frame = 3.7 µs × 400 × 8 = 11850 µs = 11.9 ms
+                                       1
+                Frame frequency =             = 84.3 Hz
+                                    11.9 ms
+
+
+             1/11 duty cycle
+                                            400 clocks
+
+             COM1
+                                1       2       3        4              11   1    2
+                VCC
+                V1
+                V2 (V3)
+                V4
+                V5
+                                                     1 frame
+
+                1 frame = 3.7 µs × 400 × 11 = 16300 µs = 16.3 ms
+                                        1
+                Frame frequency =              = 61.4 Hz
+                                     16.3 ms
+
+             1/16 duty cycle
+                                            200 clocks
+
+             COM1
+                                1       2       3        4          16       1    2
+                VCC
+                V1
+                V2
+                V3
+                V4
+                V5
+
+                                                     1 frame
+
+                1 frame = 3.7 µs × 200 × 16 = 11850 µs = 11.9 ms
+                                       1
+                Frame frequency =            = 84.3 Hz
+                                    11.9 ms
+
+
+                                            Figure 22 Frame Frequency
+
+
+
+
+38
+                                                                                            HD44780U
+
+Instruction and Display Correspondence
+
+• 8-bit operation, 8-digit × 1-line display with internal reset
+  Refer to Table 11 for an example of an 8-digit × 1-line display in 8-bit operation. The HD44780U
+  functions must be set by the function set instruction prior to the display. Since the display data RAM
+  can store data for 80 characters, as explained before, the RAM can be used for displays such as for
+  advertising when combined with the display shift operation.
+  Since the display shift operation changes only the display position with DDRAM contents unchanged,
+  the first display data entered into DDRAM can be output when the return home operation is performed.
+• 4-bit operation, 8-digit × 1-line display with internal reset
+  The program must set all functions prior to the 4-bit operation (Table 12). When the power is turned on,
+  8-bit operation is automatically selected and the first write is performed as an 8-bit operation. Since
+  DB0 to DB3 are not connected, a rewrite is then required. However, since one operation is completed in
+  two accesses for 4-bit operation, a rewrite is needed to set the functions (see Table 12). Thus, DB4 to
+  DB7 of the function set instruction is written twice.
+• 8-bit operation, 8-digit × 2-line display
+  For a 2-line display, the cursor automatically moves from the first to the second line after the 40th digit
+  of the first line has been written. Thus, if there are only 8 characters in the first line, the DDRAM
+  address must be again set after the 8th character is completed. (See Table 13.) Note that the display shift
+  operation is performed for the first and second lines. In the example of Table 13, the display shift is
+  performed when the cursor is on the second line. However, if the shift operation is performed when the
+  cursor is on the first line, both the first and second lines move together. If the shift is repeated, the
+  display of the second line will not move to the first line. The same display will only shift within its own
+  line for the number of times the shift is repeated.
+
+Note: When using the internal reset, the electrical characteristics in the Power Supply Conditions Using
+      Internal Reset Circuit table must be satisfied. If not, the HD44780U must be initialized by
+      instructions. See the section, Initializing by Instruction.
+
+
+
+
+                                                                                                          39
+HD44780U
+Table 11      8-Bit Operation, 8-Digit × 1-Line Display Example with Internal Reset
+
+                              Instruction
+Step
+No. RS     R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 Display                         Operation
+
+1    Power supply on (the HD44780U is initialized by the internal              Initialized. No display.
+     reset circuit)
+
+2    Function set                                                              Sets to 8-bit operation and
+     0     0      0      0    1         1   0    0      *     *                selects 1-line display and 5 × 8
+                                                                               dot character font. (Number of
+                                                                               display lines and character
+                                                                               fonts cannot be changed after
+                                                                               step #2.)
+
+3    Display on/off control                                                    Turns on display and cursor.
+                                                                    _
+     0     0     0       0    0         0   1    1      1     0                Entire display is in space mode
+                                                                               because of initialization.
+
+4    Entry mode set                                                            Sets mode to increment the
+                                                                    _
+     0     0    0        0    0         0   0    1      1     0                address by one and to shift the
+                                                                               cursor to the right at the time of
+                                                                               write to the DD/CGRAM.
+                                                                               Display is not shifted.
+
+5    Write data to CGRAM/DDRAM                                                 Writes H. DDRAM has already
+                                                                    H_
+     1     0      0   1    0   0            1    0      0     0                been selected by initialization
+                                                                               when the power was turned on.
+                                                                               The cursor is incremented by
+                                                                               one and shifted to the right.
+
+6    Write data to CGRAM/DDRAM                                                 Writes I.
+                                                                    HI_
+     1     0      0   1    0   0            1    0      0     1
+
+7                                   ·                                     ·
+                                    ·                                     ·
+                                    ·                                     ·
+                                    ·                                     ·
+                                    ·                                     ·
+
+8    Write data to CGRAM/DDRAM                                                 Writes I.
+                                                                    HITACHI_
+     1     0      0   1    0   0            1    0      0     1
+
+9    Entry mode set                                                            Sets mode to shift display at
+                                                                    HITACHI_
+     0     0    0        0    0         0   0    1      1     1                the time of write.
+
+10   Write data to CGRAM/DDRAM                                                 Writes a space.
+                                                                    ITACHI _
+     1     0      0   0    1   0            0    0      0     0
+
+
+
+
+40
+                                                                                        HD44780U
+Table 11      8-Bit Operation, 8-Digit × 1-Line Display Example with Internal Reset (cont)
+
+                               Instruction
+Step
+No. RS     R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 Display                     Operation
+
+11   Write data to CGRAM/DDRAM                                             Writes M.
+                                                             TACHI M_
+     1     0      0   1    0   0             1   1   0   1
+
+12                                  ·                              ·
+                                    ·                              ·
+                                    ·                              ·
+                                    ·                              ·
+                                    ·                              ·
+
+13   Write data to CGRAM/DDRAM                                             Writes O.
+                                                             MICROKO_
+     1     0      0   1    0   0             1   1   1   1
+
+14   Cursor or display shift                                               Shifts only the cursor position
+                                                             MICROKO
+                                                                   _
+     0     0      0     0      0        1    0   0   *   *                 to the left.
+
+15   Cursor or display shift                                               Shifts only the cursor position
+                                                             MICROKO
+                                                                  _
+     0     0      0     0      0        1    0   0   *   *                 to the left.
+
+16   Write data to CGRAM/DDRAM                                             Writes C over K.
+                                                             ICROCO
+                                                                  _
+     1     0      0   1    0   0             0   0   1   1                 The display moves to the left.
+
+17   Cursor or display shift                                               Shifts the display and cursor
+                                                             MICROCO
+                                                                   _
+     0     0      0     0      0        1    1   1   *   *                 position to the right.
+
+18   Cursor or display shift                                               Shifts the display and cursor
+                                                             MICROCO_
+     0     0      0     0      0        1    0   1   *   *                 position to the right.
+
+19   Write data to CGRAM/DDRAM                                             Writes M.
+                                                             ICROCOM_
+     1     0      0   1    0   0             1   1   0   1
+
+20                                  ·                              ·
+                                    ·                              ·
+                                    ·                              ·
+                                    ·                              ·
+                                    ·                              ·
+
+21   Return home                                                           Returns both display and
+                                                             HITACHI
+                                                             _
+     0     0    0        0     0        0    0   0   1   0                 cursor to the original position
+                                                                           (address 0).
+
+
+
+
+                                                                                                           41
+HD44780U
+Table 12         4-Bit Operation, 8-Digit × 1-Line Display Example with Internal Reset
+
+                                 Instruction
+Step
+No. RS        R/W DB7 DB6 DB5 DB4                                      Display   Operation
+
+1       Power supply on (the HD44780U is initialized by the internal             Initialized. No display.
+        reset circuit)
+
+2       Function set                                                             Sets to 4-bit operation.
+        0     0      0      0    1     0                                         In this case, operation is
+                                                                                 handled as 8 bits by initializa-
+                                                                                 tion, and only this instruction
+                                                                                 completes with one write.
+
+3       Function set                                                             Sets 4-bit operation and
+        0     0      0      0    1     0                                         selects 1-line display and 5 × 8
+        0     0      0      0    *     *                                         dot character font. 4-bit
+                                                                                 operation starts from this step
+                                                                                 and resetting is necessary.
+                                                                                 (Number of display lines and
+                                                                                 character fonts cannot be
+                                                                                 changed after step #3.)
+
+4       Display on/off control                                                   Turns on display and cursor.
+                                                                        _
+        0     0     0       0    0     0                                         Entire display is in space mode
+        0     0     1       1    1     0                                         because of initialization.
+
+5       Entry mode set                                                           Sets mode to increment the
+                                                                        _
+        0     0    0        0    0     0                                         address by one and to shift the
+        0     0    0        1    1     0                                         cursor to the right at the time of
+                                                                                 write to the DD/CGRAM.
+                                                                                 Display is not shifted.
+
+    6   Write data to CGRAM/DDRAM                                                Writes H.
+                                                                        H_
+        1     0      0   1    0   0                                              The cursor is incremented by
+        1     0      1   0    0   0                                              one and shifts to the right.
+Note:     The control is the same as for 8-bit operation beyond step #6.
+
+
+
+
+42
+                                                                                           HD44780U
+Table 13     8-Bit Operation, 8-Digit × 2-Line Display Example with Internal Reset
+
+                             Instruction
+Step
+No. RS     R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 Display                        Operation
+
+1   Power supply on (the HD44780U is initialized by the internal              Initialized. No display.
+    reset circuit)
+
+2   Function set                                                              Sets to 8-bit operation and
+    0     0      0      0    1         1   1    0      *     *                selects 2-line display and 5 × 8
+                                                                              dot character font.
+
+3   Display on/off control                                                    Turns on display and cursor.
+                                                                   _
+    0     0     0       0    0         0   1    1      1     0                All display is in space mode
+                                                                              because of initialization.
+
+4   Entry mode set                                                            Sets mode to increment the
+                                                                   _
+    0     0    0        0    0         0   0    1      1     0                address by one and to shift the
+                                                                              cursor to the right at the time of
+                                                                              write to the DD/CGRAM.
+                                                                              Display is not shifted.
+
+5   Write data to CGRAM/DDRAM                                                 Writes H. DDRAM has already
+                                                                   H_
+    1     0      0   1    0   0            1    0      0     0                been selected by initialization
+                                                                              when the power was turned on.
+                                                                              The cursor is incremented by
+                                                                              one and shifted to the right.
+
+6                                  ·                                     ·
+                                   ·                                     ·
+                                   ·                                     ·
+                                   ·                                     ·
+                                   ·                                     ·
+
+7   Write data to CGRAM/DDRAM                                                 Writes I.
+                                                                   HITACHI_
+    1     0      0   1    0   0            1    0      0     1
+
+8   Set DDRAM address                                                         Sets DDRAM address so that
+                                                                   HITACHI
+    0     0   1    1         0         0   0    0      0     0                the cursor is positioned at the
+                                                                   _
+                                                                              head of the second line.
+
+
+
+
+                                                                                                             43
+HD44780U
+Table 13     8-Bit Operation, 8-Digit × 2-Line Display Example with Internal Reset (cont)
+
+                          Instruction
+Step
+No. RS     R/W DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0 Display                    Operation
+
+9    Write data to CGRAM/DDRAM                                            Writes M.
+                                                           HITACHI
+     1     0      0   1    0   0        1   1   0    1
+                                                           M_
+
+10                             ·                                 ·
+                               ·                                 ·
+                               ·                                 ·
+                               ·                                 ·
+                               ·                                 ·
+
+11   Write data to CGRAM/DDRAM                                            Writes O.
+                                                           HITACHI
+     1     0      0   1    0   0        1   1   1    1
+                                                           MICROCO_
+
+12   Entry mode set                                                       Sets mode to shift display at
+                                                           HITACHI
+     0     0    0     0   0        0    0   1   1    1                    the time of write.
+                                                           MICROCO_
+
+13   Write data to CGRAM/DDRAM                                            Writes M. Display is shifted to
+                                                           ITACHI
+     1     0      0   1    0   0        1   1   0    1                    the left. The first and second
+                                                           ICROCOM_
+                                                                          lines both shift at the same
+                                                                          time.
+14                             ·                                 ·
+                               ·                                 ·
+                               ·                                 ·
+                               ·                                 ·
+                               ·                                 ·
+
+15   Return home                                                          Returns both display and
+                                                           HITACHI
+                                                           _
+     0     0    0     0   0        0    0   0   1    0                    cursor to the original position
+                                                           MICROCOM
+                                                                          (address 0).
+
+
+
+
+44
+                                                                                                        HD44780U
+
+Initializing by Instruction
+
+If the power supply conditions for correctly operating the internal reset circuit are not met, initialization by
+instructions becomes necessary.
+
+Refer to Figures 23 and 24 for the procedures on 8-bit and 4-bit initializations, respectively.
+
+
+                       Power on
+
+
+
+             Wait for more than 15 ms                     Wait for more than 40 ms
+              after VCC rises to 4.5 V                    after VCC rises to 2.7 V
+
+
+    RS R/WDB7 DB6 DB5 DB4 DB3DB2 DB1 DB0                     BF cannot be checked before this instruction.
+     0 0 0 0 1 1 * * * *                                     Function set (Interface is 8 bits long.)
+
+
+             Wait for more than 4.1 ms
+
+
+
+    RS R/WDB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0                    BF cannot be checked before this instruction.
+     0 0 0 0 1 1 * * * *                                     Function set (Interface is 8 bits long.)
+
+
+             Wait for more than 100 µs
+
+
+
+    RS R/WDB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0                    BF cannot be checked before this instruction.
+     0 0 0 0 1 1 * * * *                                     Function set (Interface is 8 bits long.)
+
+
+
+                                                             BF can be checked after the following instructions.
+                                                             When BF is not checked, the waiting time between
+                                                             instructions is longer than the execution instuction
+                                                             time. (See Table 6.)
+                                                             Function set (Interface is 8 bits long. Specify the
+    RS R/WDB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0                    number of display lines and character font.)
+     0 0 0 0 1 1 N F * *                                     The number of display lines and character font
+                                                             cannot be changed after this point.
+     0   0    0    0    0    0    1     0   0   0
+     0   0    0    0    0    0    0     0   0   1            Display off
+     0   0    0    0    0    0    0     1   I/D S            Display clear
+                                                             Entry mode set
+
+
+                  Initialization ends
+
+                                                Figure 23 8-Bit Interface
+
+
+
+
+                                                                                                                    45
+HD44780U
+
+               Power on
+
+
+
+      Wait for more than 15 ms               Wait for more than 40 ms
+       after VCC rises to 4.5 V              after VCC rises to 2.7 V
+
+
+      RS R/W DB7 DB6 DB5 DB4                   BF cannot be checked before this instruction.
+       0 0 0 0 1 1                             Function set (Interface is 8 bits long.)
+
+
+
+     Wait for more than 4.1 ms
+
+
+
+      RS R/W DB7 DB6 DB5 DB4                   BF cannot be checked before this instruction.
+       0 0 0 0 1 1                             Function set (Interface is 8 bits long.)
+
+
+     Wait for more than 100 µs
+
+
+
+      RS R/W DB7 DB6 DB5 DB4                   BF cannot be checked before this instruction.
+       0 0 0 0 1 1                             Function set (Interface is 8 bits long.)
+
+
+      RS R/W DB7 DB6 DB5 DB4                   BF can be checked after the following instructions.
+       0 0 0 0 1 0                             When BF is not checked, the waiting time between
+      0    0    0    0     1 0                 instructions is longer than the execution instuction
+                                               time. (See Table 6.)
+      0    0    N    F     * *
+                                               Function set (Set interface to be 4 bits long.)
+      0    0    0    0     0 0                 Interface is 8 bits in length.
+      0    0    1    0     0 0
+                                               Function set (Interface is 4 bits long. Specify the
+      0    0    0    0     0 0
+                                               number of display lines and character font.)
+      0    0    0    0     0 1                 The number of display lines and character font
+      0    0    0    0     0 0                 cannot be changed after this point.
+      0    0    0    1    I/D S                Display off
+                                               Display clear
+
+          Initialization ends                  Entry mode set
+
+
+                                  Figure 24 4-Bit Interface
+
+
+
+
+46
+                                                                                           HD44780U
+
+Absolute Maximum Ratings*
+Item                         Symbol            Value                 Unit                  Notes
+Power supply voltage (1)     VCC–GND           –0.3 to +7.0          V                     1
+Power supply voltage (2)     VCC–V5            –0.3 to +13.0         V                     1, 2
+Input voltage                Vt                –0.3 to VCC +0.3      V                     1
+Operating temperature        Topr              –30 to +75            °C
+Storage temperature          Tstg              –55 to +125           °C                    4
+Note:   *   If the LSI is used above these absolute maximum ratings, it may become permanently damaged.
+            Using the LSI within the following electrical characteristic limits is strongly recommended for
+            normal operation. If these electrical characteristic conditions are also exceeded, the LSI will
+            malfunction and cause poor reliability.
+
+
+
+
+                                                                                                        47
+HD44780U
+
+DC Characteristics (VCC = 2.7 to 4.5 V, Ta = –30 to +75°C*3)
+Item                     Symbol      Min         Typ         Max         Unit       Test Condition Notes*
+Input high voltage (1)   VIH1        0.7V CC     —           VCC         V                            6
+(except OSC1)
+Input low voltage (1)    VIL1        –0.3        —           0.55        V                            6
+(except OSC1)
+Input high voltage (2)   VIH2        0.7V CC     —           VCC         V                            15
+(OSC1)
+Input low voltage (2)    VIL2        —           —           0.2V CC     V                            15
+(OSC1)
+Output high voltage (1) VOH1         0.75V CC    —           —           V          –I OH = 0.1 mA    7
+(DB0–DB7)
+Output low voltage (1)   VOL1        —           —           0.2V CC     V          I OL = 0.1 mA     7
+(DB0–DB7)
+Output high voltage (2) VOH2         0.8V CC     —           —           V          –I OH = 0.04 mA   8
+(except DB0–DB7)
+Output low voltage (2)   VOL2        —           —           0.2V CC     V          I OL = 0.04 mA    8
+(except DB0–DB7)
+Driver on resistance     RCOM        —           2           20          kΩ         ±Id = 0.05 mA,    13
+(COM)                                                                               VLCD = 4 V
+Driver on resistance     RSEG        —           2           30          kΩ         ±Id = 0.05 mA,    13
+(SEG)                                                                               VLCD = 4 V
+Input leakage current    I LI        –1          —           1           µA         VIN = 0 to VCC    9
+Pull-up MOS current      –I p        10          50          120         µA         VCC = 3 V
+(DB0–DB7, RS, R/W)
+Power supply current     I CC        —           150         300         µA         Rf oscillation,   10, 14
+                                                                                    external clock
+                                                                                    VCC = 3 V,
+                                                                                    f OSC = 270 kHz
+LCD voltage              VLCD1       3.0         —           11.0        V          VCC–V5, 1/5 bias 16
+                         VLCD2       3.0         —           11.0        V          VCC–V5, 1/4 bias 16
+Note:   *   Refer to the Electrical Characteristics Notes section following these tables.
+
+
+
+
+48
+                                                                                                   HD44780U
+
+AC Characteristics (VCC = 2.7 to 4.5 V, Ta = –30 to +75°C*3)
+
+Clock Characteristics
+
+Item                                      Symbol Min        Typ     Max         Unit        Test Condition Note*
+External External clock frequency         f cp       125    250     350         kHz                           11
+clock     External clock duty             Duty       45     50      55          %
+operation
+          External clock rise time        t rcp      —      —       0.2         µs
+            External clock fall time      t fcp      —      —       0.2         µs
+Rf          Clock oscillation frequency f OSC        190    270     350         kHz         Rf = 75 kΩ,       12
+oscillation                                                                                 VCC = 3 V
+Note:   *   Refer to the Electrical Characteristics Notes section following these tables.
+
+
+
+Bus Timing Characteristics
+
+Write Operation
+
+Item                                    Symbol       Min     Typ          Max          Unit       Test Condition
+Enable cycle time                       t cycE       1000    —            —            ns         Figure 25
+Enable pulse width (high level)         PWEH         450     —            —
+Enable rise/fall time                   t Er, t Ef   —       —            25
+Address set-up time (RS, R/W to E) t AS              60      —            —
+Address hold time                       t AH         20      —            —
+Data set-up time                        t DSW        195     —            —
+Data hold time                          tH           10      —            —
+
+
+
+
+Read Operation
+
+Item                                    Symbol       Min     Typ          Max          Unit       Test Condition
+Enable cycle time                       t cycE       1000    —            —            ns         Figure 26
+Enable pulse width (high level)         PWEH         450     —            —
+Enable rise/fall time                   t Er, t Ef   —       —            25
+Address set-up time (RS, R/W to E) t AS              60      —            —
+Address hold time                       t AH         20      —            —
+Data delay time                         t DDR        —       —            360
+Data hold time                          t DHR        5       —            —
+
+
+
+
+                                                                                                                   49
+HD44780U
+
+Interface Timing Characteristics with External Driver
+Item                                  Symbol   Min     Typ   Max    Unit   Test Condition
+Clock pulse width        High level   t CWH    800     —     —      ns     Figure 27
+                         Low level    t CWL    800     —     —
+Clock set-up time                     t CSU    500     —     —
+Data set-up time                      t SU     300     —     —
+Data hold time                        t DH     300     —     —
+M delay time                          t DM     –1000   —     1000
+Clock rise/fall time                  t ct     —       —     200
+
+
+
+
+Power Supply Conditions Using Internal Reset Circuit
+Item                                  Symbol   Min     Typ   Max    Unit   Test Condition
+Power supply rise time                t r CC   0.1     —     10     ms     Figure 28
+Power supply off time                 t OFF    1       —     —
+
+
+
+
+50
+                                                                                                  HD44780U
+
+DC Characteristics (VCC = 4.5 to 5.5 V, Ta = –30 to +75°C*3)
+Item                     Symbol     Min        Typ         Max       Unit        Test Condition      Notes*
+Input high voltage (1)   VIH1       2.2        —           VCC       V                               6
+(except OSC1)
+Input low voltage (1)    VIL1       –0.3       —           0.6       V                               6
+(except OSC1)
+Input high voltage (2)   VIH2       VCC–1.0    —           VCC       V                               15
+(OSC1)
+Input low voltage (2)    VIL2       —          —           1.0       V                               15
+(OSC1)
+Output high voltage (1) VOH1        2.4        —           —         V           –I OH = 0.205 mA    7
+(DB0–DB7)
+Output low voltage (1)   VOL1       —          —           0.4       V           I OL = 1.2 mA       7
+(DB0–DB7)
+Output high voltage (2) VOH2        0.9 VCC    —           —         V           –I OH = 0.04 mA     8
+(except DB0–DB7)
+Output low voltage (2)   VOL2       —          —           0.1 VCC   V           I OL = 0.04 mA      8
+(except DB0–DB7)
+Driver on resistance     RCOM       —          2           20        kΩ          ±Id = 0.05 mA,      13
+(COM)                                                                            VLCD = 4 V
+Driver on resistance     RSEG       —          2           30        kΩ          ±Id = 0.05 mA,      13
+(SEG)                                                                            VLCD = 4 V
+Input leakage current    I LI       –1         —           1         µA          VIN = 0 to VCC      9
+Pull-up MOS current      –I p       50         125         250       µA          VCC = 5 V
+(DB0–DB7, RS, R/W)
+Power supply current     I CC       —          350         600       µA          Rf oscillation,     10, 14
+                                                                                 external clock
+                                                                                 VCC = 5 V,
+                                                                                 f OSC = 270 kHz
+LCD voltage              VLCD1      3.0        —           11.0      V           VCC–V5, 1/5 bias    16
+                         VLCD2      3.0        —           11.0      V           VCC–V5, 1/4 bias    16
+Note:   *   Refer to the Electrical Characteristics Notes section following these tables.
+
+
+
+
+                                                                                                              51
+HD44780U
+
+AC Characteristics (VCC = 4.5 to 5.5 V, Ta = –30 to +75°C*3)
+
+Clock Characteristics
+
+Item                                        Symbol Min     Typ      Max         Unit        Test Condition Notes*
+External External clock frequency           f cp    125    250      350         kHz                         11
+clock     External clock duty               Duty    45     50       55          %                           11
+operation
+          External clock rise time          t rcp   —      —        0.2         µs                          11
+            External clock fall time        t fcp   —      —        0.2         µs                          11
+Rf          Clock oscillation frequency f OSC       190    270      350         kHz         Rf = 91 kΩ      12
+oscillation                                                                                 VCC = 5.0 V
+Note:   *   Refer to the Electrical Characteristics Notes section following these tables.
+
+
+
+Bus Timing Characteristics
+
+Write Operation
+
+Item                                   Symbol       Min      Typ          Max          Unit         Test Condition
+Enable cycle time                      t cycE       500      —            —            ns           Figure 25
+Enable pulse width (high level)        PWEH         230      —            —
+Enable rise/fall time                  t Er, t Ef   —        —            20
+Address set-up time (RS, R/W to E) t AS             40       —            —
+Address hold time                      t AH         10       —            —
+Data set-up time                       t DSW        80       —            —
+Data hold time                         tH           10       —            —
+
+
+
+
+Read Operation
+
+Item                                   Symbol       Min      Typ          Max          Unit         Test Condition
+Enable cycle time                      t cycE       500      —            —            ns           Figure 26
+Enable pulse width (high level)        PWEH         230      —            —
+Enable rise/fall time                  t Er, t Ef   —        —            20
+Address set-up time (RS, R/W to E) t AS             40       —            —
+Address hold time                      t AH         10       —            —
+Data delay time                        t DDR        —        —            160
+Data hold time                         t DHR        5        —            —
+
+
+
+
+52
+                                                                           HD44780U
+
+Interface Timing Characteristics with External Driver
+Item                                  Symbol   Min     Typ   Max    Unit   Test Condition
+Clock pulse width        High level   t CWH    800     —     —      ns     Figure 27
+                         Low level    t CWL    800     —     —
+Clock set-up time                     t CSU    500     —     —
+Data set-up time                      t SU     300     —     —
+Data hold time                        t DH     300     —     —
+M delay time                          t DM     –1000   —     1000
+Clock rise/fall time                  t ct     —       —     100
+
+
+
+
+Power Supply Conditions Using Internal Reset Circuit
+Item                                  Symbol   Min     Typ   Max    Unit   Test Condition
+Power supply rise time                t rCC    0.1     —     10     ms     Figure 28
+Power supply off time                 t OFF    1       —     —
+
+
+
+
+                                                                                       53
+HD44780U
+
+Electrical Characteristics Notes
+
+1. All voltage values are referred to GND = 0 V.
+
+     VCC
+
+                             B
+
+       V1                           A = VCC –V5         The conditions of V1 and V5 voltages are for proper
+                 A                  B = VCC –V1         operation of the LSI and not for the LCD output level.
+                                    A ≥ 1.5 V           The LCD drive voltage condition for the LCD output
+       V5                           B ≤ 0.25 × A        level is specified as LCD voltage VLCD.
+
+
+2. VCC ≥ V1 ≥ V2 ≥ V3 ≥ V4 ≥ V5 must be maintained.
+3. For die products, specified at 75°C.
+4. For die products, specified by the die shipment specification.
+5. The following four circuits are I/O pin configurations except for liquid crystal display output.
+
+     Input pin                                                                       Output pin
+     Pin: E (MOS without pull-up)     Pins: RS, R/W (MOS with pull-up)               Pins: CL1, CL2, M, D
+
+                                             VCC                    VCC                            VCC
+
+
+                          PMOS                     PMOS                   PMOS                           PMOS
+
+
+                                        (pull up MOS)
+                          NMOS                                            NMOS                           NMOS
+
+
+     I/O Pin
+     Pins: DB0 –DB7           VCC           VCC
+     (MOS with pull-up)                                 (input circuit)
+                 (pull-up MOS)      PMOS                PMOS
+
+                                                                                 Input enable
+
+
+
+                                                   NMOS
+                                                                    VCC
+
+                                                   NMOS
+                                                       PMOS                                          Output enable
+                                                                                                     Data
+
+
+
+                                                          NMOS
+                                                                             (output circuit)
+                                                                             (tristate)
+
+
+
+
+54
+                                                                                                                HD44780U
+6. Applies to input pins and I/O pins, excluding the OSC1 pin.
+7. Applies to I/O pins.
+8. Applies to output pins.
+9. Current flowing through pull–up MOSs, excluding output drive MOSs.
+10. Input/output current is excluded. When input is at an intermediate level with CMOS, the excessive
+    current flows through the input circuit to the power supply. To avoid this from happening, the input
+    level must be fixed high or low.
+11. Applies only to external clock operation.
+
+                                                                                         Th             Tl
+
+                  Oscillator     OSC1
+                                                       0.7 VCC
+                                                       0.5 VCC
+                        Open     OSC2                  0.3 VCC
+
+
+                                                                                 t rcp        t fcp
+
+                                                                   Th
+                                                       Duty =            × 100%
+                                                                 Th + Tl
+
+12. Applies only to the internal oscillator operation using oscillation resistor Rf.
+
+                                    R f : 75 k Ω ± 2% (when VCC = 3 V)
+                        OSC1
+                                    R f : 91 k Ω ± 2% (when VCC = 5 V)
+   Rf                               Since the oscillation frequency varies depending on the OSC1 and
+                                    OSC2 pin capacitance, the wiring length to these pins should be minimized.
+                        OSC2
+
+
+
+
+                                VCC = 5 V                                                       VCC = 3 V
+                  500                                                            500
+
+
+                  400                                                            400
+    f OSC (kHz)
+
+
+
+
+                                                                   f OSC (kHz)
+
+
+
+
+                  300                                                            300
+                  (270)                                                          (270)
+                                               max.                                                          max.
+                  200                           typ.                             200
+                                                                                                             typ.
+                                               min.                                                          min.
+                  100                                                            100
+                           50    (91)100     150                                         50   (75)    100      150
+                                R f (k Ω)                                                        R f (k Ω)
+
+
+
+
+                                                                                                                      55
+HD44780U
+13. RCOM is the resistance between the power supply pins (VCC, V1, V4, V5) and each common signal pin
+    (COM1 to COM16).
+    RSEG is the resistance between the power supply pins (VCC, V2, V3, V5) and each segment signal pin
+    (SEG1 to SEG40).
+14. The following graphs show the relationship between operation frequency and current consumption.
+
+                                   VCC = 5 V                                                    VCC = 3 V
+                1.8                                                          1.8
+                1.6                                                          1.6
+                1.4                                                          1.4
+                1.2                                                          1.2
+     ICC (mA)
+
+
+
+
+                                                                  ICC (mA)
+                1.0                                        max.              1.0
+                0.8                                                          0.8
+                0.6                                        typ.
+                                                                             0.6
+                                                                                                                         max.
+                0.4                                                          0.4
+                0.2                                                                                                      typ.
+                                                                             0.2
+                0.0                                                          0.0
+                      0   100     200     300       400   500                      0   100     200     300       400   500
+
+                                fOSC or fcp (kHz)                                            fOSC or fcp (kHz)
+
+
+15. Applies to the OSC1 pin.
+16. Each COM and SEG output voltage is within ±0.15 V of the LCD voltage (V CC, V1, V2, V3, V4, V5)
+    when there is no load.
+
+
+
+
+56
+                                                                                   HD44780U
+
+Load Circuits
+
+Data Bus DB0 to DB7
+
+                                          VCC = 5 V
+
+      For VCC = 4.5 to 5.5 V                                     For VCC = 2.7 to 4.5 V
+                                               3.9 k Ω
+      Test                                                       Test
+      point                                                      point
+
+              90 pF            11 k Ω           IS2074 H
+                                                                                  50 pF
+                                                diodes
+
+
+
+
+External Driver Control Signals: CL1, CL2, D, M
+
+                                  Test
+                                  point
+
+                                                         30 pF
+
+
+
+
+                                                                                          57
+HD44780U
+
+Timing Characteristics
+
+                           VIH1                                                           VIH1
+     RS                    VIL1                                                           VIL1
+                                  tAS                                             tAH
+
+
+
+     R/W                   VIL1                                                                  VIL1
+
+                                                      PWEH                        tAH
+
+                                                                                  tEf
+
+     E                                   VIH1                       VIH1
+                                         VIL1                       VIL1                                VIL1
+                                                tEr
+                                                             tDSW                 tH
+
+
+
+
+                                                      VIH1                                VIH1
+     DB0 to DB7                                       VIL1           Valid data           VIL1
+                                                                       tcycE
+
+
+
+
+                                        Figure 25 Write Operation
+
+
+                           VIH1                                                           VIH1
+     RS                    VIL1                                                           VIL1
+                                  tAS                                             tAH
+
+
+
+     R/W                   VIH1                                                          VIH1
+
+                                                      PWEH                        tAH
+
+                                                                                  tEf
+     E                                   VIH1                       VIH1
+                                         VIL1                       VIL1                                VIL1
+                                                tEr
+                                           tDDR                                   tDHR
+
+
+
+
+                                                      VOH1                                VOH1
+     DB0 to DB7                                       VOL1 *         Valid data         * VOL1
+                                                                       tcycE
+
+
+
+     Note:   * VOL1 is assumed to be 0.8 V at 2 MHz operation.
+
+                                        Figure 26 Read Operation
+
+
+
+
+58
+                                                                                            HD44780U
+
+                                                        tct
+                                VOH2     VOH2
+   CL1                                             VOL2
+                                        tCWH
+                                                 tCWH
+                                       tCSU
+
+   CL2                                           VOH2
+                          VOL2
+                                       tCSU                          tCWL
+                                                                       tct
+
+   D                                                                               VOH2
+                                                                                   VOL2
+                                                                             tDH
+
+                                                                     tSU
+                                                        VOH2
+   M
+
+                                                              t DM
+
+                         Figure 27 Interface Timing with External Driver
+
+
+
+
+              2.7 V/4.5 V*2
+    VCC
+
+
+                 0.2 V                                        0.2 V                 0.2 V
+
+
+
+
+                         trcc                                              tOFF*1
+
+                         0.1 ms ≤ trcc ≤ 10 ms                        tOFF ≥ 1 ms
+
+
+
+Notes: 1. tOFF compensates for the power oscillation period caused by momentary power supply
+          oscillations.
+       2. Specified at 4.5 V for 5-V operation, and at 2.7 V for 3-V operation.
+       3. For if 4.5 V is not reached during 5-V operation, the internal reset circuit will not operate
+          normally.
+          In this case, the LSI must be initialized by software. (Refer to the Initializing by
+          Instruction section.)
+
+
+                                Figure 28 Internal Power Supply Reset
+
+
+
+
+                                                                                                          59
+HD44780U
+
+Cautions
+
+1. Hitachi neither warrants nor grants licenses of any rights of Hitachi’s or any third party’s patent,
+   copyright, trademark, or other intellectual property rights for information contained in this document.
+   Hitachi bears no responsibility for problems that may arise with third party’s rights, including
+   intellectual property rights, in connection with use of the information contained in this document.
+2. Products and product specifications may be subject to change without notice. Confirm that you have
+   received the latest product standards or specifications before final design, purchase or use.
+3. Hitachi makes every attempt to ensure that its products are of high quality and reliability. However,
+   contact Hitachi’s sales office before using the product in an application that demands especially high
+   quality and reliability or where its failure or malfunction may directly threaten human life or cause risk
+   of bodily injury, such as aerospace, aeronautics, nuclear power, combustion control, transportation,
+   traffic, safety equipment or medical equipment for life support.
+4. Design your application so that the product is used within the ranges guaranteed by Hitachi particularly
+   for maximum rating, operating supply voltage range, heat radiation characteristics, installation
+   conditions and other characteristics. Hitachi bears no responsibility for failure or damage when used
+   beyond the guaranteed ranges. Even within the guaranteed ranges, consider normally foreseeable
+   failure rates or failure modes in semiconductor devices and employ systemic measures such as fail-
+   safes, so that the equipment incorporating Hitachi product does not cause bodily injury, fire or other
+   consequential damage due to operation of the Hitachi product.
+5. This product is not designed to be radiation resistant.
+6. No one is permitted to reproduce or duplicate, in any form, the whole or part of this document without
+   written approval from Hitachi.
+7. Contact Hitachi’s sales office for any questions regarding this document or Hitachi semiconductor
+   products.
+
+
+
+
+Hitachi, Ltd.
+Semiconductor & Integrated Circuits.
+Nippon Bldg., 2-6-2, Ohte-machi, Chiyoda-ku, Tokyo 100-0004, Japan
+Tel: Tokyo (03) 3270-2111 Fax: (03) 3270-5109
+URL      NorthAmerica        : http:semiconductor.hitachi.com/
+         Europe              : http://www.hitachi-eu.com/hel/ecg
+         Asia (Singapore)    : http://www.has.hitachi.com.sg/grp3/sicd/index.htm
+         Asia (Taiwan)       : http://www.hitachi.com.tw/E/Product/SICD_Frame.htm
+         Asia (HongKong) : http://www.hitachi.com.hk/eng/bo/grp3/index.htm
+         Japan               : http://www.hitachi.co.jp/Sicd/indx.htm
+For further information write to:
+Hitachi Semiconductor     Hitachi Europe GmbH                 Hitachi Asia Pte. Ltd.             Hitachi Asia (Hong Kong) Ltd.
+(America) Inc.            Electronic components Group         16 Collyer Quay #20-00             Group III (Electronic Components)
+179 East Tasman Drive,    Dornacher Straße 3                  Hitachi Tower                      7/F., North Tower, World Finance Centre,
+San Jose,CA 95134         D-85622 Feldkirchen, Munich         Singapore 049318                   Harbour City, Canton Road, Tsim Sha Tsui,
+Tel: <1> (408) 433-1990   Germany                             Tel: 535-2100                      Kowloon, Hong Kong
+Fax: <1>(408) 433-0223    Tel: <49> (89) 9 9180-0             Fax: 535-1533                      Tel: <852> (2) 735 9218
+                          Fax: <49> (89) 9 29 30 00                                              Fax: <852> (2) 730 0281
+                          Hitachi Europe Ltd.                 Hitachi Asia Ltd.                  Telex: 40815 HITEC HX
+                          Electronic Components Group.        Taipei Branch Office
+                          Whitebrook Park                     3F, Hung Kuo Building. No.167,
+                          Lower Cookham Road                  Tun-Hwa North Road, Taipei (105)
+                          Maidenhead                          Tel: <886> (2) 2718-3666
+                          Berkshire SL6 8YA, United Kingdom   Fax: <886> (2) 2718-8180
+                          Tel: <44> (1628) 585000
+                          Fax: <44> (1628) 778322
+                                                                   Copyright © Hitachi, Ltd., 1998. All rights reserved. Printed in Japan.
+
+
+
+
+60
+
